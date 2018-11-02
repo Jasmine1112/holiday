@@ -124,7 +124,9 @@
                                     <div class="user_funtionality_div col-lg-9">
                                         <div class="row half_screen_height">
                                             <div class="col-lg-5 full_row_height functionality_grid" id="schedule_appointment_grid">
-                                                <img src="../img/schedule_appointment_icon.png">
+                                                <a href="schedule_appointment.php">
+                                                    <img src="../img/schedule_appointment_icon.png">
+                                                </a>
                                             </div>
 
                                             <div class="col-lg-5 full_row_height functionality_grid" id="view_schedule_grid">

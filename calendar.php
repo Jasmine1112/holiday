@@ -12,8 +12,6 @@
 
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <link rel="stylesheet" href="https://cdn.linearicons.com/free/1.0.0/icon-font.min.css">
-		<script src="js/modal_js.js"></script>
-        <script src="js/login_register_modal_ajax.js"></script>
         <script src="js/main_index_js.js"></script>
         <script src="js/calendar_js.js"></script>
 
@@ -37,41 +35,41 @@
                         //if the user has already logged in
 
 
-                        require_once 'includes/config.php';
+                        // require_once 'includes/config.php';
 
-                        $logged_user_id = $_SESSION['logged_user_id'];
+                        // $logged_user_id = $_SESSION['logged_user_id'];
 
-                        $mysqli = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
+                        // $mysqli = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 
-                        if( $mysqli->connect_errno ) {
-                            //uncomment the next line for debugging
-                            echo "<p>$mysqli->connect_error<p>";
-                            die( "Couldn't connect to database");
-                        }
+                        // if( $mysqli->connect_errno ) {
+                        //     //uncomment the next line for debugging
+                        //     echo "<p>$mysqli->connect_error<p>";
+                        //     die( "Couldn't connect to database");
+                        // }
 
-                        //check if username exists
-                        $query = "SELECT * FROM users WHERE user_id = $logged_user_id;";
+                        // //check if username exists
+                        // $query = "SELECT * FROM users WHERE user_id = $logged_user_id;";
                             
-                        $stmt = $mysqli->stmt_init();
+                        // $stmt = $mysqli->stmt_init();
 
-                        if ($stmt->prepare($query)) {
-                            if (!$stmt->execute()){
-                                print("<p>Error with resgister submission</p>");
-                            } else {
-                                $info_result = $stmt->get_result();
-                            }
-                        } else {
-                            print("<p>Error with register submission1</p>");
-                        }
-                        mysqli_stmt_close($email_stmt);
+                        // if ($stmt->prepare($query)) {
+                        //     if (!$stmt->execute()){
+                        //         print("<p>Error with resgister submission</p>");
+                        //     } else {
+                        //         $info_result = $stmt->get_result();
+                        //     }
+                        // } else {
+                        //     print("<p>Error with register submission1</p>");
+                        // }
+                        // mysqli_stmt_close($email_stmt);
                         
-                        if($info_result && $info_result->num_rows == 1) {
-                            $info_row = $info_result->fetch_assoc();
-                        }else{  
-                            print("<p>Email already used!</p>");
-                        }
+                        // if($info_result && $info_result->num_rows == 1) {
+                        //     $info_row = $info_result->fetch_assoc();
+                        // }else{  
+                        //     print("<p>Email already used!</p>");
+                        // }
 
-                        mysqli_close($mysqli);
+                        // mysqli_close($mysqli);
 
 
 
@@ -87,7 +85,10 @@
                         <div class="container-fluid">
                             <div class="row full_screen_height">
                                 <div class="schedule_info_div col-lg-2">
-                                    <h1>TODAY</h1>
+                                    <h3>TODAY</h3>
+                                    <h1 id="selected_weekday"><?php echo date("l");?></h1>
+                                    <!-- <div class="schedule_info_block">Meet with Zhang @3:30pm</div> -->
+
 
                                 </div> <!-- end of schedule info div -->
                                 <div class="user_calendar_div col-lg-10">

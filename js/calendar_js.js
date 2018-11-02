@@ -60,7 +60,7 @@ function display_calendar(displayed_year,displayed_month) {
 		for (var new_date = 1; new_date < last_date_of_displayed_month+1; new_date++) {
 			if (new_date==today_dd && displayed_month==today_mm) {
 				//if it's today, highlight with background color
-		        $(".user_calendar_div .days").append("<li><span class='today_day'>"+today_dd+"</span></li>");
+		        $(".user_calendar_div .days").append("<li><span class='today_day day pointer'>"+today_dd+"</span></li>");
 		    }else{
 		    	var scheduled_dates_string = JSON.stringify(scheduled_dates);
 		    	var displayed_dates_string = JSON.stringify([displayed_year,displayed_month,new_date]);
@@ -69,10 +69,9 @@ function display_calendar(displayed_year,displayed_month) {
 		    	// if (scheduled_dates.includes([displayed_year,displayed_month,new_date])) {
 		    	if (idx != -1){
 		    		//if the date is scheduled, highlight with border color
-		    		$(".user_calendar_div .days").append("<li><span class='scheduled_day'>"+new_date+"</span></li>");
-		    		console.log("hi");
+		    		$(".user_calendar_div .days").append("<li><span class='scheduled_day day pointer'>"+new_date+"</span></li>");
 		    	}else{
-		    		$(".user_calendar_div .days").append("<li>"+new_date+"</li>");
+		    		$(".user_calendar_div .days").append("<li><span class='day pointer'>"+new_date+"</span></li>");
 		    	}
 		    	
 
@@ -80,11 +79,68 @@ function display_calendar(displayed_year,displayed_month) {
 		    }
 		}
 
+	});
+
+}
+
+
+//display schedule of one selected date
+function display_left_schedule(input_year, input_month, input_date) {
+	var selected_date_obj = new Date(input_year, input_month, input_date);
+	var selected_weekday_str = weekday_int_text(selected_date_obj.getDay());
+	$(".schedule_info_div #selected_weekday").text(selected_weekday_str);
+
+	//retrieve schedules for current user
+	var request = $.ajax({
+		type: 'POST',
+		url: "/ajax_php/get_schedule_on_date.php",
+		dataType: "JSON",
+		data: {
+				input_year: input_year,
+				input_month: input_month+1,
+				input_date: input_date
+			  }
+	});
+
+	request.fail(function(xhr, status, error) {
+		console.log("failed");
+		console.log(xhr);
+		console.log(status);
+		console.log(error);
+	});
+
+	request.done(function(data) {
+		$(".schedule_info_block").remove();
+		if (data.length == 0) {
+			$(".schedule_info_div").append("<p class='schedule_info_block'>There's no scheduled event!</p>");
+		}else{
+			for (var i = 0; i < data.length; i++) {
+				var schedule_event = data[i];
+				var logged_user_id = schedule_event['logged_user_id'];
+				var user_id_1 = schedule_event['user_id_1'];
+				var user_id_2 = schedule_event['user_id_2'];
+
+				if (user_id_1==logged_user_id) {
+					var another_person_id = user_id_2;
+				}else{
+					var another_person_id = user_id_1;
+				}
+
+				var datetime = schedule_event['time'];
+				var time = datetime.split(" ")[1];
+
+
+				var schedule_block_str = '<div class="schedule_info_block">Meet with User '+another_person_id+' @'+time.substr(0,5)+'</div>';
+				$(".schedule_info_div").append(schedule_block_str);
+			}
+		}
+		
+
 
 	});
 
-
 }
+
 
 function month_int_text(month_int) {
 	var month = new Array(12);
@@ -103,6 +159,17 @@ function month_int_text(month_int) {
 	return month[month_int];
 }
 
+function weekday_int_text(weekday_int) {
+	var weekday = new Array(7);
+	weekday[0] =  "Sunday";
+	weekday[1] = "Monday";
+	weekday[2] = "Tuesday";
+	weekday[3] = "Wednesday";
+	weekday[4] = "Thursday";
+	weekday[5] = "Friday";
+	weekday[6] = "Saturday";
+	return weekday[weekday_int];
+}
 
 $(document).ready( function () {
 	//current day
@@ -117,6 +184,7 @@ $(document).ready( function () {
 
 	//set initial display of calendar: today
 	display_calendar(cur_year,cur_month);
+	display_left_schedule(cur_year,cur_month,cur_date);
 
 	//switch to prev or next month
 	$(".switch_month").on("click",function(event) {
@@ -142,6 +210,12 @@ $(document).ready( function () {
 	});
 
 
+	//change scheduled events to selected date
+	$(document).on("click",".days span.day",function(e) {
+		var selected_date = $(event.target).text();
+
+		display_left_schedule(calendar_year,calendar_month-1,selected_date);
+	});
 
 
 

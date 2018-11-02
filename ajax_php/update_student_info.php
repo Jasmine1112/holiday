@@ -23,7 +23,7 @@
 
 	//check if username exists
 	$query = "UPDATE users
-				SET last_name='$last_name_input', first_name='$first_name_input', email='$email_input', phone_number='$phone_input', school='$school_input', college='$college_input', major='$major_input'
+				SET last_name='$last_name_input', first_name='$first_name_input', email='$email_input', phone_number='$phone_input', school='$school_input', college_department='$college_input', major='$major_input'
 				WHERE user_id = $logged_user_id;";
 		
 	$stmt = $mysqli->stmt_init();

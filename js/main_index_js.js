@@ -26,7 +26,7 @@ $(document).ready( function () {
 			var email = data['email'];
 			var phone_number = data['phone_number'];
 			var school = data['school'];
-			var college = data['college'];
+			var college = data['college_department'];
 			var major = data['major'];
 
 			$(".student_edit_info_div #last_name_input").val(last_name);

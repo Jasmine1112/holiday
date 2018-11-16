@@ -39,20 +39,41 @@
                             <h1>Schedule</h1>
                             <h2>Search</h2>
                             <div id="search_schedule_div">
-                                <span>Name: </span><input type="text" id="name_input"><br>
+                                <span>Name: </span><input type="text" id="name_input" value="<?php echo $_GET['name']?>"><br>
                                 <span>Date:</span> <input type="date" placeholder="yyyy-mm-dd" id="date_input"><br>
-                                <span>Department:</span> <input type="text" id="department_input"><br>
+                                <span>Department:</span> <input type="text" id="department_input" value="<?php echo $_GET['department']?>"><br>
+                                <span>Hours Type:</span>
+                                <select id="type_input">
+                                    <option value="both">Both</option>
+                                    <option value="office_hour">Office Hour</option>
+                                    <option value="available_hour">Available Hour</option>
+                                </select><br>
                                 <span id="search_schedule_button" class="pointer">SEARCH</span>
 
-                                <table id="search_schedule_result_table">
-                                    <tr class="header">
-                                        <th>Name</th>
-                                        <th>Department</th>
-                                        <th>Time</th>
-                                        <th>Location</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </table>
+                                <div id="search_office_hour_result_div" class="hours_result_div">
+                                    <h3>Office Hours</h3>
+                                    <table id="search_office_hour_result_table" class="hours_result_table">
+                                        <tr class="header">
+                                            <th>Name</th>
+                                            <th>Department</th>
+                                            <th>Time</th>
+                                            <th>Location</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </table>
+                                </div>
+
+                                <div id="search_available_hour_result_div" class="hours_result_div">
+                                    <h3>Available Hours</h3>
+                                    <table id="search_available_hour_result_table" class="hours_result_table">
+                                        <tr class="header">
+                                            <th>Name</th>
+                                            <th>Department</th>
+                                            <th>Time</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </table>
+                                </div>
                             </div>
                         </div>
 
@@ -60,15 +81,25 @@
                         <div class="confirmation_modal" id="schedule_appointment_confirmation_modal">
                             <span class="close_modal_button pointer"><span class="lnr lnr-arrow-left"></span>Back</span>
                             <h2>Do you confirm to attend this appointment?</h2>
-                            <p>PLACEHOLDER PLACEHOLDER PLACEHOLDER</p>
+                            <p>
+                                <span id="confirm_date_1"></span>, 
+                                <span id="confirm_weekday_1"></span>, 
+                                <span id="confirm_start_time_1"></span>
+                            </p>
+                            <p><span id="confirm_username_1"></span> @<span id="confirm_location_1"></span></p>
+                            <span>Meeting Subject:</span><br>
+                            <input type="text" id="meeting_subject_input" value="<?php echo $_GET['subject']?>"><br>
+                            <span>Notes:</span><br>
+                            <textarea rows="5" cols="50" id="notes_input" placeholder="optional" ><?php echo $_GET['note']?></textarea><br>
                             <span id="confirm_schedule_appointment_button" class="pointer">Confirm</span>
                             <span class="close_modal_button pointer">Cancel</span>
                         </div>
 
                         <div class="confirmation_modal" id="successful_schedule_confirmation_modal">
-                            <span class="close_modal_button pointer"><span class="lnr lnr-arrow-left"></span>Back</span>
+                            <span class="close_modal_button pointer"><span class="lnr lnr-arrow-left"></span>Schedule Another Appointment</span>
                             <h2>You have successfully scheduled your appointment!</h2>
-                            <p>PLACEHOLDER PLACEHOLDER PLACEHOLDER</p>
+                            <p>Nov. 9th, Friday, 10:00</p>
+                            <p>Professor Claire Cardie @Gates 321</p>
                             <a href="calendar.php"><span class="pointer">View in Calendar</span><a>
                             <span class="close_modal_button pointer">Change</span>
                         </div>

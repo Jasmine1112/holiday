@@ -88,6 +88,19 @@ function display_calendar(displayed_year,displayed_month) {
 function display_left_schedule(input_year, input_month, input_date) {
 	var selected_date_obj = new Date(input_year, input_month, input_date);
 	var selected_weekday_str = weekday_int_text(selected_date_obj.getDay());
+
+	var today_obj = new Date();
+	var today_year = today_obj.getFullYear();
+	var today_month = today_obj.getMonth();
+	var today_date = today_obj.getDate();
+
+	if (parseInt(today_year) == parseInt(input_year) && parseInt(today_month) == parseInt(input_month) && parseInt(today_date) == parseInt(input_date)) {
+		$("#selected_date").text("TODAY");
+	}else{
+		var selected_month = month_int_text(input_month);
+		$("#selected_date").text(selected_month + ", " +input_date);
+	}
+	
 	$(".schedule_info_div #selected_weekday").text(selected_weekday_str);
 
 	//retrieve schedules for current user
@@ -115,10 +128,15 @@ function display_left_schedule(input_year, input_month, input_date) {
 			$(".schedule_info_div").append("<p class='schedule_info_block'>There's no scheduled event!</p>");
 		}else{
 			for (var i = 0; i < data.length; i++) {
+
 				var schedule_event = data[i];
+				// console.log(schedule_event);
 				var logged_user_id = schedule_event['logged_user_id'];
 				var user_id_1 = schedule_event['user_id_1'];
 				var user_id_2 = schedule_event['user_id_2'];
+				var username = schedule_event['username'];
+				var location = schedule_event['location'];
+				var schedule_id = schedule_event['schedule_id'];
 
 				if (user_id_1==logged_user_id) {
 					var another_person_id = user_id_2;
@@ -129,8 +147,12 @@ function display_left_schedule(input_year, input_month, input_date) {
 				var datetime = schedule_event['time'];
 				var time = datetime.split(" ")[1];
 
-
-				var schedule_block_str = '<div class="schedule_info_block">Meet with User '+another_person_id+' @'+time.substr(0,5)+'</div>';
+				var schedule_block_str = '<div class="schedule_info_block pointer" id="schedule_info_block_'+schedule_id+'">Meeting with '+username+' @'+time.substr(0,5);
+				schedule_block_str += '<div class="schedule_info_block_detail hidden" id="schedule_info_block_detail_'+schedule_id+'">';
+				schedule_block_str += '<span>Location:</span><br>';
+				schedule_block_str += '<span>'+location+'</span><br>';
+				schedule_block_str += '</div>';
+				schedule_block_str += '</div>';
 				$(".schedule_info_div").append(schedule_block_str);
 			}
 		}
@@ -140,7 +162,6 @@ function display_left_schedule(input_year, input_month, input_date) {
 	});
 
 }
-
 
 function month_int_text(month_int) {
 	var month = new Array(12);
@@ -184,7 +205,7 @@ $(document).ready( function () {
 
 	//set initial display of calendar: today
 	display_calendar(cur_year,cur_month);
-	display_left_schedule(cur_year,cur_month,cur_date);
+	display_left_schedule(cur_year,cur_month-1,cur_date);
 
 	//switch to prev or next month
 	$(".switch_month").on("click",function(event) {
@@ -209,7 +230,6 @@ $(document).ready( function () {
 		display_calendar(calendar_year,calendar_month);
 	});
 
-
 	//change scheduled events to selected date
 	$(document).on("click",".days span.day",function(e) {
 		var selected_date = $(event.target).text();
@@ -219,7 +239,12 @@ $(document).ready( function () {
 
 
 
-
+	//expand detail of schedule on the left side, if cliking on the info block
+	$(document).on("click",".schedule_info_block",function(e) {
+		var block_detail_id = $(event.target).closest(".schedule_info_block").attr("id").replace("schedule_info_block","schedule_info_block_detail");
+		// console.log(block_detail_id);
+		$("#"+block_detail_id).toggleClass("hidden");
+	});
 
 
 

@@ -3,13 +3,12 @@
 	session_start();
 	require_once '../includes/config.php';
 
-	$input_year = $_POST['input_year'];
-	$input_month = $_POST['input_month'];
-	$input_date = $_POST['input_date'];
-	// $input_year = $_GET['input_year'];
-	// $input_month = $_GET['input_month'];
-	// $input_date = $_GET['input_date'];
-
+	$name_input = $_POST['name_input'];
+	$weekday_input = $_POST['weekday_input'];
+	$department_input = $_POST['department_input'];
+	// $name_input = $_GET['name_input'];
+	// $weekday_input = $_GET['weekday_input'];
+	// $department_input = $_GET['department_input'];
 
 	$logged_user_id = $_SESSION['logged_user_id'];
 
@@ -22,11 +21,14 @@
 	}
 
 	//check if username exists
-	$query = "SELECT *, $logged_user_id AS logged_user_id
-			FROM schedules S, users U
-			WHERE ((S.user_id_1 = $logged_user_id AND S.user_id_2 = U.user_id)
-					OR (S.user_id_2 = $logged_user_id AND S.user_id_1 = U.user_id))
-					AND DATE(S.time)='$input_year-$input_month-$input_date';";
+	$query = "SELECT *
+			FROM users U, available_hours AH
+			WHERE (U.user_id<>$logged_user_id AND U.user_id = AH.user_id)
+				AND UPPER(U.username) LIKE UPPER('%$name_input%')
+				AND UPPER(U.college_department) LIKE UPPER('%$department_input%')
+				AND UPPER(AH.weekdays) LIKE UPPER('%$weekday_input%')
+			ORDER BY U.username;";
+
 
 	$result = $mysqli->query($query);
 	if (!$result) {

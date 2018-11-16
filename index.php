@@ -138,7 +138,10 @@
                                         </div>
                                         <div class="row half_screen_height">
                                             <div class="col-lg-5 full_row_height functionality_grid" id="change_appointment_grid">
-                                                <img src="../img/change_appointment_icon.png">
+                                                <a href="edit_appointment.php">
+                                                    <img src="../img/change_appointment_icon.png">
+                                                </a>
+                                                
                                             </div>
                                             <div class="col-lg-5 full_row_height functionality_grid" id="view_message_grid">
                                                 <img src="../img/view_message_icon.png">

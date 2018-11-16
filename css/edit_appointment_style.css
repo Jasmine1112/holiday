@@ -1,0 +1,84 @@
+
+
+.confirmation_modal{
+    display: none;
+    position: fixed;
+    z-index: 10;
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%;
+    overflow: auto;
+    padding:2em;
+    background: white;
+}
+
+
+#edit_schedules_div div{
+    width: 80%;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+
+#edit_schedules_div div table{
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#edit_schedules_div div table th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+.action_button{
+    display: inline-block;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    margin-left: auto;
+    margin-right: auto;
+    color: white;
+    border-radius: 5px;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.confirm_button{
+    display: inline-block;
+    margin-top: 1em;
+    color: white;
+    border-radius: 5px;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.red_button {
+    background-color: #eb3f57;
+}
+
+.green_button{
+    background-color: #2cb5ab;
+}
+
+.grey_button{
+    background-color: #e1e1e1;
+    color: #515067;
+}
+
+.reschedule_past:hover{
+    text-decoration: none;
+    color: white;
+}
+
+.reschedule_past{
+    text-decoration: none;
+}
+
+.wait_button{
+    cursor: inherit;
+}
+
+
+
+

@@ -3,13 +3,7 @@
 	session_start();
 	require_once '../includes/config.php';
 
-	$input_year = $_POST['input_year'];
-	$input_month = $_POST['input_month'];
-	$input_date = $_POST['input_date'];
-	// $input_year = $_GET['input_year'];
-	// $input_month = $_GET['input_month'];
-	// $input_date = $_GET['input_date'];
-
+	$schedule_id = $_POST['schedule_id'];
 
 	$logged_user_id = $_SESSION['logged_user_id'];
 
@@ -22,11 +16,11 @@
 	}
 
 	//check if username exists
-	$query = "SELECT *, $logged_user_id AS logged_user_id
-			FROM schedules S, users U
-			WHERE ((S.user_id_1 = $logged_user_id AND S.user_id_2 = U.user_id)
-					OR (S.user_id_2 = $logged_user_id AND S.user_id_1 = U.user_id))
-					AND DATE(S.time)='$input_year-$input_month-$input_date';";
+	if ($appoint_type=="request_status") {
+		$query = "UPDATE schedules
+				WHERE schedule_id = $schedule_id AND (user_id_1 = $logged_user_id OR user_id_2 = $logged_user_id);";
+	}
+	
 
 	$result = $mysqli->query($query);
 	if (!$result) {

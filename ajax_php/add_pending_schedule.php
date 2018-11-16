@@ -25,7 +25,7 @@
 
 	//check if username exists
 	$query = "INSERT INTO schedules (user_id_1, user_id_2, `time`,location,status,notes)
-				VALUES ($logged_user_id, '$user_id_2', '$year-$month-$date $scheduled_time', '$location' ,'upcoming','$notes')";
+				VALUES ($logged_user_id, '$user_id_2', '$year-$month-$date $scheduled_time', '$location' ,'pending','$notes')";
 	echo $query;
 		
 	if ($mysqli->query($query) === TRUE) {

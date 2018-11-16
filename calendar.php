@@ -85,7 +85,7 @@
                         <div class="container-fluid">
                             <div class="row full_screen_height">
                                 <div class="schedule_info_div col-lg-2">
-                                    <h3>TODAY</h3>
+                                    <h3 id="selected_date">TODAY</h3>
                                     <h1 id="selected_weekday"><?php echo date("l");?></h1>
                                     <!-- <div class="schedule_info_block">Meet with Zhang @3:30pm</div> -->
 

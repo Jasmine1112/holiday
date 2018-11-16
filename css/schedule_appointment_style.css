@@ -9,23 +9,29 @@
 
 
 
-#search_schedule_result_table {
+.hours_result_div {
     margin-top: 2em;
-    border-collapse: collapse;
-    width: 100%;
     display: none;
 }
 
-#search_schedule_result_table th {
+.hours_result_table{
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.hours_result_table th {
     border: 1px solid #dddddd;
     text-align: left;
     padding: 8px;
 }
 
-#search_schedule_result_table tr:nth-child(even) {
+.hours_result_table tr:nth-child(even) {
     background-color: #dddddd;
 }
 
+#search_available_hour_result_div{
+    margin-bottom: 5em;
+}
 
 #search_schedule_div #search_schedule_button {
     display: inline-block;

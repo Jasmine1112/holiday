@@ -87,6 +87,11 @@ function confirm_schedule(schedule_detail_json) {
 	$("#schedule_appointment_confirmation_modal #confirm_start_time_1").text(start_time);
 	$("#schedule_appointment_confirmation_modal #confirm_username_1").text(name);
 
+	$("#successful_schedule_confirmation_modal #confirm_date_2").text(month+" "+date+", "+year);
+	$("#successful_schedule_confirmation_modal #confirm_weekday_2").text(weekdays);
+	$("#successful_schedule_confirmation_modal #confirm_start_time_2").text(start_time);
+	$("#successful_schedule_confirmation_modal #confirm_username_2").text(name);
+
 	if (office_hour_location!=undefined) {
 		$("#schedule_appointment_confirmation_modal #confirm_location_1").text(office_hour_location);
 	}else{
@@ -99,61 +104,65 @@ function confirm_schedule(schedule_detail_json) {
 	schedule_detail_json["scheduled_year"] = year;
 
 	if (office_hour_location!=undefined) {
-		$("#schedule_appointment_confirmation_modal #confirm_schedule_appointment_button").click({param: schedule_detail_json, hours_type:'office_hour'}, confirm_register);
+		schedule_detail_json['hours_type'] = 'office_hour';
+		// $("#schedule_appointment_confirmation_modal #confirm_schedule_appointment_button").click({param: schedule_detail_json, hours_type:'office_hour'}, confirm_register);
 	}else{
-		$("#schedule_appointment_confirmation_modal #confirm_schedule_appointment_button").click({param: schedule_detail_json, hours_type:'available_hour'}, confirm_register);
+		schedule_detail_json['hours_type'] = 'available_hour';
+		// $("#schedule_appointment_confirmation_modal #confirm_schedule_appointment_button").click({param: schedule_detail_json, hours_type:'available_hour'}, confirm_register);
 	}
+	
+	$("#hidden_schedule_info").val(JSON.stringify(schedule_detail_json));
 
 	
 
 	$("#schedule_appointment_confirmation_modal").css("display","block");
 }
 
-function confirm_register(event) {
-	var schedule_detail_json = event.data.param;
-	var user_id = schedule_detail_json.user_id;
-	var scheduled_time = schedule_detail_json.start_time;
-	var location = schedule_detail_json.office_hour_location;
-	var month = schedule_detail_json.scheduled_month+1;
-	var date = schedule_detail_json.scheduled_date;
-	var year = schedule_detail_json.scheduled_year;
-	var notes = $("#schedule_appointment_confirmation_modal #notes_input").val();
+// function confirm_register(event) {
+// 	var schedule_detail_json = event.data.param;
+// 	var user_id = schedule_detail_json.user_id;
+// 	var scheduled_time = schedule_detail_json.start_time;
+// 	var location = schedule_detail_json.office_hour_location;
+// 	var month = schedule_detail_json.scheduled_month+1;
+// 	var date = schedule_detail_json.scheduled_date;
+// 	var year = schedule_detail_json.scheduled_year;
+// 	var notes = $("#schedule_appointment_confirmation_modal #notes_input").val();
 
-	var hours_type = event.data.hours_type;
-	if (hours_type=="office_hour") {
-		console.log("office_hour");
-	}else if (hours_type=="available_hour") {
-		console.log("available_hour");
-	}
+// 	var hours_type = event.data.hours_type;
+// 	if (hours_type=="office_hour") {
+// 		console.log("office_hour");
+// 	}else if (hours_type=="available_hour") {
+// 		console.log("available_hour");
+// 	}
 
-	// console.log(scheduled_time, month, date,year);
+// 	// console.log(scheduled_time, month, date,year);
 
-	// var request = $.ajax({
-	// 	type: 'GET',
-	// 	url: "/ajax_php/add_new_schedule.php",
-	// 	data: {
-	// 		user_id_2: user_id,
-	// 		time: scheduled_time,
-	// 		location: location,
-	// 		month:month,
-	// 		date:date,
-	// 		year:year,
-	// 		notes
-	// 	}
-	// });
+// 	// var request = $.ajax({
+// 	// 	type: 'GET',
+// 	// 	url: "/ajax_php/add_new_schedule.php",
+// 	// 	data: {
+// 	// 		user_id_2: user_id,
+// 	// 		time: scheduled_time,
+// 	// 		location: location,
+// 	// 		month:month,
+// 	// 		date:date,
+// 	// 		year:year,
+// 	// 		notes
+// 	// 	}
+// 	// });
 
-	// request.fail(function(xhr, status, error) {
-	// 	console.log("failed");
-	// 	console.log(xhr);
-	// 	console.log(status);
-	// 	console.log(error);
-	// });
+// 	// request.fail(function(xhr, status, error) {
+// 	// 	console.log("failed");
+// 	// 	console.log(xhr);
+// 	// 	console.log(status);
+// 	// 	console.log(error);
+// 	// });
 
-	// request.done(function(data) {
-	// 	$("#schedule_appointment_confirmation_modal").css("display","none");
-	// 	$("#successful_schedule_confirmation_modal").css("display","block");
-	// });
-}
+// 	// request.done(function(data) {
+// 	// 	$("#schedule_appointment_confirmation_modal").css("display","none");
+// 	// 	$("#successful_schedule_confirmation_modal").css("display","block");
+// 	// });
+// }
 
 $(document).ready( function () {
 	
@@ -290,51 +299,49 @@ $(document).ready( function () {
 	});
 
 
-	// $("#schedule_appointment_confirmation_modal #confirm_schedule_appointment_button").on("click", function( event, param, hours_type ) {
-	// 	var schedule_detail_json = param;
-	// 	var user_id = schedule_detail_json.user_id;
-	// 	var scheduled_time = schedule_detail_json.start_time;
-	// 	var location = schedule_detail_json.office_hour_location;
-	// 	var month = schedule_detail_json.scheduled_month+1;
-	// 	var date = schedule_detail_json.scheduled_date;
-	// 	var year = schedule_detail_json.scheduled_year;
-	// 	var notes = $("#schedule_appointment_confirmation_modal #notes_input").val();
+	$("#schedule_appointment_confirmation_modal #confirm_schedule_appointment_button").on("click", function( event ) {
+		// var schedule_detail_json = param;
+		var schedule_detail_json = $("#hidden_schedule_info").val();
+		schedule_detail_json = JSON.parse(schedule_detail_json);
+		console.log(schedule_detail_json);
 
-	// 	// var hours_type = event.data.hours_type;
-	// 	if (hours_type=="office_hour") {
-	// 		console.log("office_hour");
-	// 	}else if (hours_type=="available_hour") {
-	// 		console.log("available_hour");
-	// 	}
+		var user_id = schedule_detail_json.user_id;
+		var scheduled_time = schedule_detail_json.start_time;
+		var location = schedule_detail_json.office_hour_location;
+		var month = schedule_detail_json.scheduled_month+1;
+		var date = schedule_detail_json.scheduled_date;
+		var year = schedule_detail_json.scheduled_year;
+		var hours_type = schedule_detail_json.hours_type;
+		var notes = $("#schedule_appointment_confirmation_modal #notes_input").val();
 
-	// 	// console.log(scheduled_time, month, date,year);
+		// console.log(scheduled_time, month, date,year);
 
-	// 	// var request = $.ajax({
-	// 	// 	type: 'GET',
-	// 	// 	url: "/ajax_php/add_new_schedule.php",
-	// 	// 	data: {
-	// 	// 		user_id_2: user_id,
-	// 	// 		time: scheduled_time,
-	// 	// 		location: location,
-	// 	// 		month:month,
-	// 	// 		date:date,
-	// 	// 		year:year,
-	// 	// 		notes
-	// 	// 	}
-	// 	// });
+		var request = $.ajax({
+			type: 'GET',
+			url: "/ajax_php/add_new_schedule.php",
+			data: {
+				user_id_2: user_id,
+				time: scheduled_time,
+				location: location,
+				month:month,
+				date:date,
+				year:year,
+				notes:notes
+			}
+		});
 
-	// 	// request.fail(function(xhr, status, error) {
-	// 	// 	console.log("failed");
-	// 	// 	console.log(xhr);
-	// 	// 	console.log(status);
-	// 	// 	console.log(error);
-	// 	// });
+		request.fail(function(xhr, status, error) {
+			console.log("failed");
+			console.log(xhr);
+			console.log(status);
+			console.log(error);
+		});
 
-	// 	// request.done(function(data) {
-	// 	// 	$("#schedule_appointment_confirmation_modal").css("display","none");
-	// 	// 	$("#successful_schedule_confirmation_modal").css("display","block");
-	// 	// });
-	// });
+		request.done(function(data) {
+			$("#schedule_appointment_confirmation_modal").css("display","none");
+			$("#successful_schedule_confirmation_modal").css("display","block");
+		});
+	});
 
 	$("#schedule_appointment_confirmation_modal .close_modal_button").on("click",function(event) {
 		$("#proposed_location_input").remove();

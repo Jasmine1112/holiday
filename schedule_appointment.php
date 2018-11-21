@@ -87,6 +87,7 @@
                                 <span id="confirm_start_time_1"></span>
                             </p>
                             <p><span id="confirm_username_1"></span> @<span id="confirm_location_1"></span></p>
+                            <input type="hidden" id="hidden_schedule_info">
                             <span>Meeting Subject:</span><br>
                             <input type="text" id="meeting_subject_input" value="<?php echo $_GET['subject']?>"><br>
                             <span>Notes:</span><br>
@@ -98,8 +99,12 @@
                         <div class="confirmation_modal" id="successful_schedule_confirmation_modal">
                             <span class="close_modal_button pointer"><span class="lnr lnr-arrow-left"></span>Schedule Another Appointment</span>
                             <h2>You have successfully scheduled your appointment!</h2>
-                            <p>Nov. 9th, Friday, 10:00</p>
-                            <p>Professor Claire Cardie @Gates 321</p>
+                            <p>
+                                <span id="confirm_date_2"></span>, 
+                                <span id="confirm_weekday_2"></span>, 
+                                <span id="confirm_start_time_2"></span>
+                            </p>
+                            <p><span id="confirm_username_2"></span> @<span id="confirm_location_2"></span></p>
                             <a href="calendar.php"><span class="pointer">View in Calendar</span><a>
                             <span class="close_modal_button pointer">Change</span>
                         </div>

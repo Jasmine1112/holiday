@@ -314,6 +314,7 @@ $(document).ready( function () {
 		var hours_type = schedule_detail_json.hours_type;
 		var notes = $("#schedule_appointment_confirmation_modal #notes_input").val();
 
+		var meeting_subject = $("#schedule_appointment_confirmation_modal #meeting_subject_input").val();
 		// console.log(scheduled_time, month, date,year);
 
 		var request = $.ajax({
@@ -326,7 +327,8 @@ $(document).ready( function () {
 				month:month,
 				date:date,
 				year:year,
-				notes:notes
+				notes:notes,
+				meeting_subject: meeting_subject
 			}
 		});
 

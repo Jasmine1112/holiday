@@ -1,4 +1,10 @@
+input{
+    border: grey 1px solid;
+}
 
+textarea{
+    border: grey 1px solid;
+}
 
 
 #schedule_div {

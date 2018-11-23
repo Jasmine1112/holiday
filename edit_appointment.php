@@ -93,7 +93,10 @@
                                     <span>Name: </span><span id="name_span"></span><br>
                                     <span>Department:</span><span id="department_span"></span><br>
                                     <span>Date:</span> <input type="date" placeholder="yyyy-mm-dd" id="date_input"><br>
+                                    <span>Time:</span> <input type="time" id="time_input" placeholder="hh:mm"><br>
                                     <span>Location:</span> <input type="text" id="location_input"><br>
+                                    <span>Meeting Subject:</span> <input type="text" id="meeting_subject_input"><br>
+                                    <span>Notes:</span><br>
                                     <textarea rows="5" cols="50" id="notes_input" placeholder="optional" ></textarea><br>
                                 </div>
                             </div>

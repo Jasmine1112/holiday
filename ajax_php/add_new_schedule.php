@@ -12,6 +12,7 @@
 	$date = $_GET['date'];
 	$year = $_GET['year'];
 	$notes = $_GET['notes'];
+	$meeting_subject = $_GET['meeting_subject'];
 
 	
 
@@ -24,8 +25,8 @@
 	}
 
 	//check if username exists
-	$query = "INSERT INTO schedules (user_id_1, user_id_2, `time`,location,status,notes)
-				VALUES ($logged_user_id, '$user_id_2', '$year-$month-$date $scheduled_time', '$location' ,'upcoming','$notes')";
+	$query = "INSERT INTO schedules (user_id_1, user_id_2, `time`,location,status,meeting_subject,notes)
+				VALUES ($logged_user_id, '$user_id_2', '$year-$month-$date $scheduled_time', '$location' ,'upcoming', '$meeting_subject','$notes')";
 	echo $query;
 		
 	if ($mysqli->query($query) === TRUE) {

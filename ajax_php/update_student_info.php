@@ -37,7 +37,7 @@
 	} else {
 		print("<p>Error with register submission1</p>");
 	}
-	mysqli_stmt_close($email_stmt);
+	mysqli_stmt_close($stmt);
 
 	
 	if($info_result && $info_result->num_rows == 1) {

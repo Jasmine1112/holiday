@@ -4,6 +4,14 @@
 	require_once '../includes/config.php';
 
 	$schedule_id = $_POST['schedule_id'];
+	$year = $_POST['year'];
+	$month = $_POST['month'];
+	$date = $_POST['date'];
+	$hour = $_POST['hour'];
+	$minute = $_POST['minute'];
+	$location = $_POST['location'];
+	$meeting_subject = $_POST['meeting_subject'];
+	$notes = $_POST['notes'];
 
 	$logged_user_id = $_SESSION['logged_user_id'];
 
@@ -16,25 +24,23 @@
 	}
 
 	//check if username exists
-	if ($appoint_type=="request_status") {
-		$query = "UPDATE schedules
-				WHERE schedule_id = $schedule_id AND (user_id_1 = $logged_user_id OR user_id_2 = $logged_user_id);";
-	}
+	$query = "UPDATE schedules
+			SET `time`='$year-$month-$date $hour:$minute:00', location='$location', meeting_subject='$meeting_subject', notes='$notes'
+			WHERE schedule_id = $schedule_id AND (user_id_1 = $logged_user_id OR user_id_2 = $logged_user_id);";
 	
 
-	$result = $mysqli->query($query);
-	if (!$result) {
-		print($mysqli->error);
+	$stmt = $mysqli->stmt_init();
+
+	if ($stmt->prepare($query)) {
+		if (!$stmt->execute()){
+			print("<p>Error with resgister submission</p>");
+		} else {
+			$info_result = $stmt->get_result();
+		}
+	} else {
+		print("<p>Error with register submission1</p>");
 	}
-
-	$schedule_results = [];
-	while ( $row = $result->fetch_assoc() ) {
-		array_push($schedule_results, $row);
-	}
-
-	mysqli_close($mysqli);
-
-	echo json_encode($schedule_results);
+	mysqli_stmt_close($stmt);
 
 
 

@@ -113,7 +113,7 @@ function display_appointments(appoint_type) {
 				tr_str += "<th>"+schedule.first_name+" "+schedule.last_name+"</th>";
 				tr_str += "<th>"+schedule.time+"</th>";
 				tr_str += "<th>"+schedule.location+"</th>";
-				tr_str += "<th><span class='action_button red_button change_upcoming' id='change_"+schedule.schedule_id+"'>Change</span>";
+				tr_str += "<th><span class='action_button red_button change_upcoming' id='change_"+schedule.schedule_id+"' onClick='display_change_schedule("+JSON.stringify(schedule)+")'>Change</span>";
 				tr_str += "<span class='action_button grey_button cancel_upcoming' id='cancel_"+schedule.schedule_id+"'>Cancel</span>";
 				tr_str += "</th>"; 
 
@@ -139,6 +139,37 @@ function display_appointments(appoint_type) {
 	});
 }
 
+function display_change_schedule(schedule) {
+	//display the input from display schedule to be changed
+	console.log(schedule);
+	var name = schedule.username;
+	var department = schedule.college_department;
+	var location = schedule.location;
+	var meeting_subject = schedule.meeting_subject;
+	var notes = schedule.notes;
+
+	var time = schedule.time;
+	var t = time.split(/[- :]/);
+	var year = t[0];
+	var month = t[1];
+	var date = t[2];
+	var hour =t[3];
+	var minute = t[4];
+
+	$("#schedule_info_div #hidden_schedule_id").val(schedule.schedule_id);
+
+	$("#schedule_info_div #name_span").text(name);
+	$("#schedule_info_div #department_span").text(department);
+	$("#schedule_info_div #date_input").val(year+"-"+month+"-"+date);
+	$("#schedule_info_div #time_input").val(hour+":"+minute);
+	$("#schedule_info_div #location_input").val(location);
+	$("#schedule_info_div #meeting_subject_input").val(meeting_subject);
+	$("#schedule_info_div #notes_input").val(notes);
+
+
+	
+}
+
 $(document).ready( function () {
 	display_appointments("request_status");
 	display_appointments("upcoming_schedules");
@@ -146,13 +177,70 @@ $(document).ready( function () {
 	
 
 	$(document).on("click", ".change_upcoming",function(event) {
-		// body...
+		$("#change_schedule_modal").css("display","block");
 	});
 
 	$(document).on("click",".cancel_upcoming",function(event) {
 		$("#confirm_cancel_modal").css("display","block");
 		var schedule_id = $(this).attr("id").replace("cancel_","");
 		$("#hidden_schedule_id").val(schedule_id);
+		
+	});
+
+	$("#change_schedule_modal #save_change_button").on("click",function(event) {
+		var schedule_id = $("#hidden_schedule_id").val();
+		var date_input = $("#schedule_info_div #date_input").val();
+		var time_input = $("#schedule_info_div #time_input").val();
+		var location_input = $("#schedule_info_div #location_input").val();
+		var meeting_subject_input = $("#schedule_info_div #meeting_subject_input").val();
+		var notes_input = $("#schedule_info_div #notes_input").val();
+
+		var hour_input = time_input.split(":")[0];
+		var minute_input = time_input.split(":")[1];
+
+		var date_lst = date_input.split("-");
+
+		if (date_lst.length==3 || date_input=="") {
+			var year_input = parseInt(date_lst[0]);
+			var month_input = parseInt(date_lst[1]);
+			var day_input = parseInt(date_lst[2]);
+			if ((!isNaN(year_input) && !isNaN(month_input) && !isNaN(day_input)) || date_input=="") {
+				var request = $.ajax({
+					type: 'POST',
+					url: "/ajax_php/change_schedule.php",
+					data: {
+						schedule_id: schedule_id,
+						year: year_input,
+						month: month_input,
+						date: day_input,
+						hour: hour_input,
+						minute: minute_input,
+						location: location_input,
+						meeting_subject: meeting_subject_input,
+						notes: notes_input
+					}
+				});
+
+				request.fail(function(xhr, status, error) {
+					console.log("failed");
+					console.log(xhr);
+					console.log(status);
+					console.log(error);
+				});
+
+				request.done(function(data) {
+					$("#change_schedule_modal").css("display","none");
+					display_appointments("upcoming_schedules");
+				});
+			}else{
+				//if some of the numbers cannot be parsed as int
+				alert("Please follow the date format: yyyy-mm-dd");
+			}
+		}else{
+			//if there's no two '-'
+			alert("Please follow the date format: yyyy-mm-dd");
+		}
+
 		
 	});
 

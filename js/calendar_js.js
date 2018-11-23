@@ -226,6 +226,7 @@ $(document).ready( function () {
 		}else if ($(event.currentTarget).hasClass("switch_current_month")) {
 			calendar_month = cur_month;
 			calendar_year = cur_year;
+			display_left_schedule(calendar_year,calendar_month-1,cur_date);
 		}
 		display_calendar(calendar_year,calendar_month);
 	});
@@ -245,6 +246,104 @@ $(document).ready( function () {
 		// console.log(block_detail_id);
 		$("#"+block_detail_id).toggleClass("hidden");
 	});
+
+
+
+	//right click on dates
+	//disable the right click menu
+
+	$(document).on("contextmenu",".user_calendar_div .day", function (event) {
+	    // Avoid the real one
+	    event.preventDefault();
+
+	    //record which date this box is for
+	    $("#add_available_hour_div #add_avail_year").val(calendar_year);
+	    $("#add_available_hour_div #add_avail_month").val(calendar_month);
+	    $("#add_available_hour_div #add_avail_date").val($(event.target).text());
+	    
+	    // Show contextmenu
+	    var left_width= document.getElementById('schedule_info_div').clientWidth;
+	    $("#add_available_hour_div").css("top",event.clientY+ "px");
+	    $("#add_available_hour_div").css("left",event.clientX-left_width + "px");
+	    $("#add_available_hour_div").css("display","block");
+	    
+	});
+
+
+	// If the document is clicked somewhere, hide the add avai hour div
+	$(document).on("click", function (e) {
+	    // If the clicked element is not the menu
+	    if ($(e.target).closest("#add_available_hour_div").length == 0) {
+	        // Hide it
+	        $("#add_available_hour_div").hide(100);
+	        $("#avai_hour_start_time_input").val("");
+			$("#avai_hour_end_time_input").val("");
+			$("#avai_hour_location_input").val("");
+			$("#repeat_checkbox").prop("checked",false);
+	    }
+	});
+
+
+	//save new available hours
+	$("#set_avai_hour_button").on("click",function(event) {
+		var year_input = $("#add_available_hour_div #add_avail_year").val();
+		var month_input = $("#add_available_hour_div #add_avail_month").val();
+		var date_input = $("#add_available_hour_div #add_avail_date").val();
+
+		var date_obj = new Date(year_input,month_input-1,date_input);
+		var weekday_input = date_obj.getDay();
+		var weekday_input = weekday_int_text(weekday_input);
+
+		var start_time_input = $("#avai_hour_start_time_input").val();
+		var end_time_input = $("#avai_hour_end_time_input").val();
+		var repeat_input = $("#repeat_checkbox").prop("checked");
+		var location_input = $("#avai_hour_location_input").val();
+
+		console.log(year_input, month_input, date_input, weekday_input, start_time_input, end_time_input, repeat_input, location_input);
+
+
+
+		var request = $.ajax({
+			type: 'GET',
+			url: "/ajax_php/add_new_available_hour.php",
+			data: {
+					year: year_input,
+					month: month_input,
+					date: date_input,
+					weekday: weekday_input,
+					start_time: start_time_input,
+					end_time: end_time_input,
+					repeat: repeat_input,
+					location: location_input
+				  }
+		});
+
+		request.fail(function(xhr, status, error) {
+			console.log("failed");
+			console.log(xhr);
+			console.log(status);
+			console.log(error);
+		});
+
+		request.done(function(data) {
+			// Hide it
+	        $("#add_available_hour_div").hide(100);
+	        $("#avai_hour_start_time_input").val("");
+			$("#avai_hour_end_time_input").val("");
+			$("#avai_hour_location_input").val("");
+			$("#repeat_checkbox").prop("checked",false);
+		});
+
+	});
+
+
+
+
+
+
+
+
+
 
 
 

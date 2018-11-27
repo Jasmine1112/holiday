@@ -94,9 +94,12 @@ function confirm_schedule(schedule_detail_json) {
 
 	if (office_hour_location!=undefined) {
 		$("#schedule_appointment_confirmation_modal #confirm_location_1").text(office_hour_location);
+		$("#successful_schedule_confirmation_modal #confirm_location_2").text(office_hour_location);
+
 	}else{
 		var available_hour_location = schedule_detail_json.available_hour_location;
 		$("#schedule_appointment_confirmation_modal #confirm_location_1").text(available_hour_location);
+		$("#successful_schedule_confirmation_modal #confirm_location_2").text(available_hour_location);
 	}
 
 	schedule_detail_json["scheduled_month"] = month_text_int(month);
@@ -168,6 +171,7 @@ $(document).ready( function () {
 	
 	//search office hour schedule
 	$("#search_schedule_button").on("click",function(event) {
+		$(".hours_result_div").css("display","none");
 		//retrieve search input
 		var name_input = $("#search_schedule_div #name_input").val();
 		var date_input = $("#search_schedule_div #date_input").val();
@@ -211,31 +215,43 @@ $(document).ready( function () {
 					});
 
 					request.done(function(data) {
-						// console.log(data);
-						$("#search_office_hour_result_table tr.result_rows").remove();
-						$("#search_office_hour_result_div").css("display","block");
-						data.forEach(function(result){
-							var result_json_str = JSON.stringify(result);
-							var tr_str = "<tr class='result_rows'>";
-							tr_str = tr_str+"<th>"+result.username+"</th>";
-							tr_str = tr_str+"<th>"+result.college_department+"</th>";
+						$("#search_office_hour_result_div p").remove();
+						// console.log(data.length);
+						if (data.length==0) {
+							$("#search_office_hour_result_div").css("display","block");
+							$("#search_office_hour_result_table").css("display","none");
+							$("#search_office_hour_result_div").append("<p>Sorry! No result available.</p>")
 
-							var start_time_arr = result.start_time.split(":");
-							var start_time = start_time_arr.slice(0,2).join(":");
-							var end_time_arr = result.end_time.split(":");
-							var end_time = end_time_arr.slice(0,2).join(":");
+						}else{
+							// console.log(data);
+							
+							$("#search_office_hour_result_table").css("display","inline-table");
+							$("#search_office_hour_result_table tr.result_rows").remove();
+							$("#search_office_hour_result_div").css("display","block");
+							data.forEach(function(result){
+								var result_json_str = JSON.stringify(result);
+								var tr_str = "<tr class='result_rows'>";
+								tr_str = tr_str+"<th>"+result.username+"</th>";
+								tr_str = tr_str+"<th>"+result.college_department+"</th>";
 
-							// if (weekday_input=="") {
+								var start_time_arr = result.start_time.split(":");
+								var start_time = start_time_arr.slice(0,2).join(":");
+								var end_time_arr = result.end_time.split(":");
+								var end_time = end_time_arr.slice(0,2).join(":");
 
-								tr_str = tr_str+"<th>"+result.weekdays+" "+ start_time+"-"+end_time+"</th>";
-							// }else{
-							// 	tr_str = tr_str+"<th>"+weekday_input+" "+ result.start_time+"-"+result.end_time+"</th>";
-							// }
-							tr_str = tr_str+"<th>"+result.office_hour_location+"</th>";
-							tr_str = tr_str+"<th><span class='register_button pointer' id='register_button_"+result.user_id+"' onclick='confirm_schedule("+result_json_str+")'>Register</span></th>";
+								// if (weekday_input=="") {
 
-							$("#search_office_hour_result_table").append(tr_str);
-						});
+									tr_str = tr_str+"<th>"+result.weekdays+" "+ start_time+"-"+end_time+"</th>";
+								// }else{
+								// 	tr_str = tr_str+"<th>"+weekday_input+" "+ result.start_time+"-"+result.end_time+"</th>";
+								// }
+								tr_str = tr_str+"<th>"+result.office_hour_location+"</th>";
+								tr_str = tr_str+"<th><span class='register_button pointer' id='register_button_"+result.user_id+"' onclick='confirm_schedule("+result_json_str+")'>Register</span></th>";
+
+								$("#search_office_hour_result_table").append(tr_str);
+							});
+						}
+						
 					});
 				}
 
@@ -260,30 +276,41 @@ $(document).ready( function () {
 					});
 
 					request.done(function(data) {
-						// console.log(data);
-						$("#search_available_hour_result_table tr.result_rows").remove();
-						$("#search_available_hour_result_div").css("display","block");
-						data.forEach(function(result){
-							var result_json_str = JSON.stringify(result);
-							var tr_str = "<tr class='result_rows'>";
-							tr_str = tr_str+"<th>"+result.username+"</th>";
-							tr_str = tr_str+"<th>"+result.college_department+"</th>";
+						$("#search_available_hour_result_div p").remove();
+						if (data.length==0) {
+							$("#search_available_hour_result_div").css("display","block");
+							$("#search_available_hour_result_table").css("display","none");
+							$("#search_available_hour_result_div").append("<p>Sorry! No result available.</p>")
 
-							var start_time_arr = result.start_time.split(":");
-							var start_time = start_time_arr.slice(0,2).join(":");
-							var end_time_arr = result.end_time.split(":");
-							var end_time = end_time_arr.slice(0,2).join(":");
+						}else{
+							// console.log(data);
+							$("#search_available_hour_result_table").css("display","inline-table");
+							$("#search_available_hour_result_table tr.result_rows").remove();
+							$("#search_available_hour_result_div").css("display","block");
+							data.forEach(function(result){
+								var result_json_str = JSON.stringify(result);
+								var tr_str = "<tr class='result_rows'>";
+								tr_str = tr_str+"<th>"+result.username+"</th>";
+								tr_str = tr_str+"<th>"+result.college_department+"</th>";
+
+								var start_time_arr = result.start_time.split(":");
+								var start_time = start_time_arr.slice(0,2).join(":");
+								var end_time_arr = result.end_time.split(":");
+								var end_time = end_time_arr.slice(0,2).join(":");
 
 
-							// if (weekday_input=="") {
-							tr_str = tr_str+"<th>"+result.weekdays+" "+ start_time+"-"+end_time+"</th>";
-							// }else{
-							// 	tr_str = tr_str+"<th>"+weekday_input+" "+ result.start_time+"-"+result.end_time+"</th>";
-							// }
-							tr_str = tr_str+"<th><span class='register_button pointer' id='register_button_"+result.user_id+"' onclick='confirm_schedule("+result_json_str+")'>Register</span></th>";
+								// if (weekday_input=="") {
+								tr_str = tr_str+"<th>"+result.weekdays+" "+ start_time+"-"+end_time+"</th>";
+								// }else{
+								// 	tr_str = tr_str+"<th>"+weekday_input+" "+ result.start_time+"-"+result.end_time+"</th>";
+								// }
+								tr_str = tr_str+"<th>"+result.available_hour_location+"</th>";
+								tr_str = tr_str+"<th><span class='register_button pointer' id='register_button_"+result.user_id+"' onclick='confirm_schedule("+result_json_str+")'>Register</span></th>";
 
-							$("#search_available_hour_result_table").append(tr_str);
-						});
+								$("#search_available_hour_result_table").append(tr_str);
+							});
+						}
+						
 					});
 				}
 				
@@ -317,32 +344,37 @@ $(document).ready( function () {
 		var meeting_subject = $("#schedule_appointment_confirmation_modal #meeting_subject_input").val();
 		// console.log(scheduled_time, month, date,year);
 
-		var request = $.ajax({
-			type: 'GET',
-			url: "/ajax_php/add_new_schedule.php",
-			data: {
-				user_id_2: user_id,
-				time: scheduled_time,
-				location: location,
-				month:month,
-				date:date,
-				year:year,
-				notes:notes,
-				meeting_subject: meeting_subject
-			}
-		});
+		if (meeting_subject=="") {
+			alert("You have to fill in your meeting subject!");
+		}else{
+			var request = $.ajax({
+				type: 'GET',
+				url: "/ajax_php/add_new_schedule.php",
+				data: {
+					user_id_2: user_id,
+					time: scheduled_time,
+					location: location,
+					month:month,
+					date:date,
+					year:year,
+					notes:notes,
+					meeting_subject: meeting_subject
+				}
+			});
 
-		request.fail(function(xhr, status, error) {
-			console.log("failed");
-			console.log(xhr);
-			console.log(status);
-			console.log(error);
-		});
+			request.fail(function(xhr, status, error) {
+				console.log("failed");
+				console.log(xhr);
+				console.log(status);
+				console.log(error);
+			});
 
-		request.done(function(data) {
-			$("#schedule_appointment_confirmation_modal").css("display","none");
-			$("#successful_schedule_confirmation_modal").css("display","block");
-		});
+			request.done(function(data) {
+				$("#schedule_appointment_confirmation_modal").css("display","none");
+				$("#successful_schedule_confirmation_modal").css("display","block");
+			});
+		}
+		
 	});
 
 	$("#schedule_appointment_confirmation_modal .close_modal_button").on("click",function(event) {

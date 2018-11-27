@@ -7,8 +7,9 @@
         <title>Holiday</title>
         <link rel="stylesheet" href="css/style.css">
         <link rel="stylesheet" href="css/edit_appointment_style.css">
-        <link href="https://fonts.googleapis.com/css?family=Yantramanav" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css?family=Lora" rel="stylesheet">
+        <!-- <link href="https://fonts.googleapis.com/css?family=Yantramanav" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Lora" rel="stylesheet"> -->
+        <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
 
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <link rel="stylesheet" href="https://cdn.linearicons.com/free/1.0.0/icon-font.min.css">
@@ -34,10 +35,14 @@
                     }else{
                         //if the user has already logged in
                 ?>
-                        <a href="index.php"><span class="lnr lnr-arrow-left"></span>Back</a>
-                        <h1>Change Schedule</h1>
+                        
                         <div id="edit_schedules_div">
-                            <div id="request_status_div">
+                            <div>
+                                <a href="index.php" class="back_to_home_button"><span class="lnr lnr-arrow-left"></span>Back</a>
+                                <h2>Change Schedules</h2>
+                            </div>
+                            
+                            <div id="request_status_div" class="schedules_to_change_div">
                                 <h3>Request Status</h3>
                                 <table id="request_status_table">
                                     <tr class="table_header">
@@ -50,7 +55,7 @@
                                 </table>
                             </div>
 
-                            <div id="upcoming_schedules_div">
+                            <div id="upcoming_schedules_div" class="schedules_to_change_div">
                                 <h3>Upcoming Schedules</h3>
                                 <table id="upcoming_schedules_table">
                                     <tr class="table_header">
@@ -63,7 +68,7 @@
                                 </table>
                             </div>
 
-                            <div id="past_schedules_div">
+                            <div id="past_schedules_div" class="schedules_to_change_div">
                                 <h3>Past Schedules</h3>
                                 <table id="past_schedules_table">
                                     <tr class="table_header">
@@ -78,7 +83,7 @@
                         </div>
 
                         <div class="confirmation_modal" id="confirm_cancel_modal">
-                            <span class="close_modal_button pointer"><span class="lnr lnr-arrow-left"></span>Back</span>
+                            <!-- <span class="close_modal_button pointer back_to_home_button"><span class="lnr lnr-arrow-left"></span>Back</span> -->
                             <h2>Are you sure you want to cancel it?</h2>
                             
                             <span id="cancel_schedule_button" class="confirm_button red_button">Yes, Cancel It!</span>
@@ -90,13 +95,19 @@
                                 <h1>Schedule Info</h1>
                                 <div id="schedule_info_div">
                                     <input type="hidden" id="hidden_schedule_id">
-                                    <span>Name: </span><span id="name_span"></span><br>
-                                    <span>Department:</span><span id="department_span"></span><br>
-                                    <span>Date:</span> <input type="date" placeholder="yyyy-mm-dd" id="date_input"><br>
-                                    <span>Time:</span> <input type="time" id="time_input" placeholder="hh:mm"><br>
-                                    <span>Location:</span> <input type="text" id="location_input"><br>
-                                    <span>Meeting Subject:</span> <input type="text" id="meeting_subject_input"><br>
-                                    <span>Notes:</span><br>
+                                    <span class="green_span">NAME</span><br>
+                                    <span id="name_span"></span><br>
+                                    <span class="green_span">DEPARTMENT</span><br>
+                                    <span id="department_span"></span><br>
+                                    <span class="green_span">DATE</span><br>
+                                    <input type="date" placeholder="yyyy-mm-dd" id="date_input"><br>
+                                    <span class="green_span">TIME</span><br>
+                                    <input type="time" id="time_input" placeholder="hh:mm"><br>
+                                    <span class="green_span">LOCATION</span><br>
+                                    <input type="text" id="location_input"><br>
+                                    <span class="green_span">MEETING SUBJECT</span><br>
+                                    <input type="text" id="meeting_subject_input"><br>
+                                    <span class="green_span">NOTES</span><br>
                                     <textarea rows="5" cols="50" id="notes_input" placeholder="optional" ></textarea><br>
                                 </div>
                             </div>

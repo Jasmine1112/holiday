@@ -1,22 +1,44 @@
 .user_calendar_div{
+    height: 100%;
     user-select: none;
     -webkit-user-select: none;
+    background-color: white;
+    margin-top: 3vh;
+    margin-left: 2%;
+    margin-right: 2%;
+    width: 70% !important;
+    padding-top: 3%;
+    padding-top: 3%;
+    padding-left: 5em !important;
+    padding-right: 5em !important;
+}
+
+.schedule_info_div{
+    color: white;
+    top: 0;
+    height: 100%; 
+    background-color: #2cb5ab; 
+    text-align: center;
+    overflow: auto;
+    padding-top: 5em;
+    padding-top: 2em;
+    margin-top: 3vh;
+    margin-bottom: 3vh;
 }
 
 
 .schedule_info_div .schedule_info_block {
-    border: black solid 1px;
-    padding: 5px;
-    padding-left: 10px;
+    /*border: black solid 1px;*/
+    text-align: left;
+    padding: 20px 15px 20px 15px;
+    background-color: #52C5BE;
 }
 
 
-
-
 .month {
-    padding: 70px 25px;
+    padding: 40px 25px;
     width: 100%;
-    background: #1abc9c;
+    /*background: #2cb5ab;*/
     text-align: center;
 }
 
@@ -33,7 +55,7 @@
 }
 
 .month span {
-    color: white;
+    color: grey;
     font-size: 20px;
     text-transform: uppercase;
     letter-spacing: 3px;
@@ -62,16 +84,20 @@
     width: 13.6%;
     color: #666;
     text-align: center;
+    font-weight: bold;
+    font-size: 1.2em;
 }
 
 .days {
     padding: 10px 0;
     background: #eee;
     margin: 0;
+    height: 50%;
 }
 
 .days li {
     /*list-style-type: none;*/
+    padding: 2% 2% 2% 2%;
     display: inline-block;
     width: 13.6%;
     text-align: center;
@@ -82,15 +108,18 @@
 
 .days li .today_day {
     padding: 5px;
-    background: #1abc9c;
+    background: #2cb5ab;
     color: white !important
 }
 
 .days li .scheduled_day{
     padding: 5px;
-    border: #1abc9c 1px solid;
+    border: #2cb5ab 1px solid;
 }
 
+.days .day{
+    font-size: 1.5em;
+}
 
 #add_available_hour_div {
     width: 15em;

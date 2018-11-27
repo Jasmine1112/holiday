@@ -7,8 +7,9 @@
         <title>Holiday</title>
         <link rel="stylesheet" href="css/style.css">
         <link rel="stylesheet" href="css/calendar_style.css">
-        <link href="https://fonts.googleapis.com/css?family=Yantramanav" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css?family=Lora" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+        <!-- <link href="https://fonts.googleapis.com/css?family=Yantramanav" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Lora" rel="stylesheet"> -->
 
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <link rel="stylesheet" href="https://cdn.linearicons.com/free/1.0.0/icon-font.min.css">
@@ -84,14 +85,14 @@
                 ?>
                         <div class="container-fluid">
                             <div class="row full_screen_height">
-                                <div class="schedule_info_div col-lg-2" id="schedule_info_div">
+                                <div class="schedule_info_div col-lg-3" id="schedule_info_div">
                                     <h3 id="selected_date">TODAY</h3>
                                     <h1 id="selected_weekday"><?php echo date("l");?></h1>
                                     <!-- <div class="schedule_info_block">Meet with Zhang @3:30pm</div> -->
 
 
                                 </div> <!-- end of schedule info div -->
-                                <div class="user_calendar_div col-lg-10">
+                                <div class="user_calendar_div col-lg-9">
                                     <div id='add_available_hour_div'>
                                         <input type="hidden" id="add_avail_year">
                                         <input type="hidden" id="add_avail_month">
@@ -106,12 +107,12 @@
                                         <span id="set_avai_hour_button">Set</span>
 
                                     </div>
-                                    <a href="index.php"><span class="lnr lnr-arrow-left"></span>Back</a>
+                                    <a href="index.php" class="back_to_home_button"><span class="lnr lnr-arrow-left"></span>Back</a>
                                     <div class="month">
                                         <span class="prev_month_pointer switch_month">&#10094;</span>
                                         <span class="next_month_pointer switch_month">&#10095;</span>
 
-                                        <span id="displayed_month"></span><br>
+                                        <span id="displayed_month"></span>
                                         <span id="displayed_year"></span><br>
                                         <span class="switch_current_month switch_month pointer">today</span>
                                     </div>

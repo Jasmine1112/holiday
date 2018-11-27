@@ -1,34 +1,41 @@
-input{
-    border: grey 1px solid;
-}
-
-textarea{
-    border: grey 1px solid;
-}
-
 
 #schedule_div {
     width: 80%;
+    margin-top: 3vw;
     margin-right: auto;
     margin-left: auto;
+}
+
+#schedule_div h3{
+    border-bottom: 2px solid #bababa;
+    padding-left: 0.5em;
+    padding-bottom: 0.2em;
+    font-weight: 350;
 }
 
 
 
 .hours_result_div {
-    margin-top: 2em;
+    margin-top: 5em;
     display: none;
 }
 
+.hours_result_div p{
+    font-size: 1.5em;
+    text-align: center;
+}
+
 .hours_result_table{
+    margin-top: 3em;
     border-collapse: collapse;
     width: 100%;
 }
 
 .hours_result_table th {
-    border: 1px solid #dddddd;
-    text-align: left;
+    border: 1px solid #c8c8c8;
+    text-align: center;
     padding: 8px;
+
 }
 
 .hours_result_table tr:nth-child(even) {
@@ -37,6 +44,40 @@ textarea{
 
 #search_available_hour_result_div{
     margin-bottom: 5em;
+}
+
+#search_schedule_div{
+    /*width: 95%;*/
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#search_schedule_div h4 {
+   width: 100%; 
+   text-align: center; 
+   border-bottom: 1px solid #bababa; 
+   line-height: 0.1em;
+   margin: 10px 0 20px; 
+}
+
+#search_schedule_div h4 span { 
+    background:#fff; 
+    padding:0 10px; 
+}
+
+#search_schedule_div .search_form_span{
+    display: block;
+    margin-top: 1em;
+    margin-bottom: -1em;
+    color: #2cb5ab;
+}
+
+#search_schedule_div input{
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border: solid 2px #c4c4c4;
 }
 
 #search_schedule_div #search_schedule_button {
@@ -66,14 +107,99 @@ textarea{
     width: 100%; 
     height: 100%;
     overflow: auto;
-    padding:2em;
     background: white;
+    padding-left: 10%;
+    padding-right: 10%;
+    padding-top: 5vw;
+}
+
+.confirmation_modal .green_bold_span{
+    color: #2cb5ab;
+    display: block;
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-top: 2em;
+    margin-bottom: -1em;
+}
+
+#schedule_appointment_confirmation_modal input{
+    border: none;
+    margin-bottom: 0.5em;
+    width: 30%;
+    border-bottom: solid 1px grey;
+    padding: 0.2em;
+    /* padding-bottom: 0.6em; */
+    font-size: 1.2em;
+    color: #575757;
+}
+
+#schedule_appointment_confirmation_modal textarea{
+    border: grey 1px solid;
+    padding: 0.6em;
+}
+
+
+.confirmation_modal .green_border_div{
+    border: solid 1px #2cb5ab;
+    border-radius: 10px;
+    width: 50%;
+    padding-top: 1em;
+    padding-bottom: 1em;
+    padding-left: 2em;
+    padding-right: 2em;
+    font-size: 1.5em;
+    margin-top: 2em;
+    margin-bottom: 3em;
 }
 
 
 
+.confirm_button{
+    display: inline-block;
+    margin-top: 1em;
+    color: white;
+    border-radius: 5px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    cursor: pointer;
+    margin-right: 3em;
+}
+
+#successful_schedule_confirmation_modal a.red_button:hover{
+    text-decoration: none;
+    color: white;
+}
+#successful_schedule_confirmation_modal a.dark_grey_button:hover{
+    text-decoration: none;
+    color: #e1e1e1;
+}
+
+#successful_schedule_confirmation_modal .red_button{
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-right: 2em;
+}
+
+#successful_schedule_confirmation_modal .dark_grey_button{
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+/*.red_button {
+    background-color: #eb3f57;
+}
 
 
+.grey_button{
+    background-color: #e1e1e1;
+    color: #515067;
+}
 
-
+.dark_grey_button{
+    color: #e1e1e1;
+    background-color: #515067;
+}
+*/
 

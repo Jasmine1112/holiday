@@ -1,31 +1,33 @@
-<div class="student_edit_info_div col-lg-9 hidden">
-	<h3>Edit Information</h3>
-    <div class="row">
-        <div class="col-lg-5">
-            <span>Last Name</span><br>
-            <input type="text" id="last_name_input"><br>
-            <span>First Name</span><br>
-            <input type="text" id="first_name_input"><br>
-            <span>Email Address</span><br>
-            <input type="text" id="email_input"><br>
-            <span>Phone</span><br>
-            <input type="text" id="phone_input"><br>
-            
+<div class="student_edit_info_div full_screen_height col-lg-8 hidden">
+    <!-- <div class="row half_screen_height"> -->
+    	<h3>Edit Information</h3>
+        <div class="row">
+            <div class="col-lg-6">
+                <span class="green_span">LAST NAME</span><br>
+                <input type="text" id="last_name_input"><br>
+                <span class="green_span">FIRST NAME</span><br>
+                <input type="text" id="first_name_input"><br>
+                <span class="green_span">EMAIL</span><br>
+                <input type="text" id="email_input"><br>
+                <span class="green_span">PHONE</span><br>
+                <input type="text" id="phone_input"><br>
+                
 
-        </div>
+            </div>
 
-        <div class="col-lg-5">
-        	<span>School</span><br>
-            <input type="text" id="school_input"><br>
-            <span>College</span><br>
-            <input type="text" id="college_input"><br>
-            <span>Major</span><br>
-            <input type="text" id="major_input"><br>
-            
+            <div class="col-lg-6">
+            	<span class="green_span">SCHOOL</span><br>
+                <input type="text" id="school_input"><br>
+                <span class="green_span">COLLEGE</span><br>
+                <input type="text" id="college_input"><br>
+                <span class="green_span">MAJOR</span><br>
+                <input type="text" id="major_input"><br>
+                
+            </div>
         </div>
-    </div>
-    <div>
-    	<span class="pointer save_button">Save</span>
-    	<span class="pointer cancel_button">Cancel</span>
-    </div>
+        <div class="edit_info_buttons_div">
+        	<span class="pointer save_button red_button">Save</span>
+        	<span class="pointer cancel_button grey_button">Cancel</span>
+        </div>
+    <!-- </div> -->
 </div>

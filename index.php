@@ -7,8 +7,7 @@
         <title>Holiday</title>
         <link rel="stylesheet" href="css/style.css">
         <link rel="stylesheet" href="css/toggle_button.min.css">
-        <link href="https://fonts.googleapis.com/css?family=Yantramanav" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css?family=Lora" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
 
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <link rel="stylesheet" href="https://cdn.linearicons.com/free/1.0.0/icon-font.min.css">
@@ -98,7 +97,7 @@
                         <div class="container-fluid">
                             <div class="row full_screen_height">
                                 <div class="user_info_div col-lg-3">
-                                    <span id="edit_user_button" class="pointer">Edit</span><br>
+                                    <span id="edit_user_button" class="green_border_button">Edit</span><br>
                                     <img src="../img/Portrait_Placeholder.png" id="portrait_img"><br>
                                     <span id="user_name">
                                         <?php
@@ -110,12 +109,12 @@
 
                                     <span id="user_affiliation">
                                         <?php
-                                            echo $info_row['affiliation'];
+                                            echo $info_row['college_department'];
                                         ?>
                                     </span><br>
 
                                     <br>
-                                    <span id="log_out_span" class="pointer">Log out</span>
+                                    <span id="log_out_span" class="pointer red_button">Log out</span>
 
                                 </div> <!-- end of user info div -->
                             <?php
@@ -127,6 +126,7 @@
                                                 <a href="schedule_appointment.php">
                                                     <img src="../img/schedule_appointment_icon.png">
                                                 </a>
+                                                <!-- <span>Schedule an Appointment</span> -->
                                             </div>
 
                                             <div class="col-lg-5 full_row_height functionality_grid" id="view_schedule_grid">

@@ -136,6 +136,7 @@ function display_left_schedule(input_year, input_month, input_date) {
 				var user_id_2 = schedule_event['user_id_2'];
 				var username = schedule_event['username'];
 				var location = schedule_event['location'];
+				var meeting_subject = schedule_event['meeting_subject'];
 				var schedule_id = schedule_event['schedule_id'];
 
 				if (user_id_1==logged_user_id) {
@@ -151,6 +152,8 @@ function display_left_schedule(input_year, input_month, input_date) {
 				schedule_block_str += '<div class="schedule_info_block_detail hidden" id="schedule_info_block_detail_'+schedule_id+'">';
 				schedule_block_str += '<span>Location:</span><br>';
 				schedule_block_str += '<span>'+location+'</span><br>';
+				schedule_block_str += '<span>Meeting Subject:</span><br>';
+				schedule_block_str += '<span>'+meeting_subject+'</span><br>';
 				schedule_block_str += '</div>';
 				schedule_block_str += '</div>';
 				$(".schedule_info_div").append(schedule_block_str);

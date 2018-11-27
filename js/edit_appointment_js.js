@@ -97,7 +97,7 @@ function display_appointments(appoint_type) {
 				tr_str += "<th>"+schedule.first_name+" "+schedule.last_name+"</th>";
 				tr_str += "<th>"+schedule.time+"</th>";
 				tr_str += "<th>"+schedule.location+"</th>";
-				tr_str += "<th><span class='action_button red_button wait_button'>Waiting</span></th>";
+				tr_str += "<th><span class='wait_button'>Waiting</span></th>";
 
 				$("#request_status_table").append(tr_str);
 			}

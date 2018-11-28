@@ -31,8 +31,11 @@
                     //if the user hasn't logged in
                     if ( !isset($_SESSION['logged_user_id'] ) ) {
                 ?> 
-
-                    <img src="../img/Login.jpg" class="home_page_img">
+                    <div class="div_left">
+                        <img src="../img/Login2.jpg" class="home_page_img">
+                        <p>We make appointments easier.</p>
+                    </div>
+                    
                     <div id="login_div">
                         <!-- <h5><span id="log_in_status_span" class="pointer" onclick="display_modal('login_form_div')">假装在右上角的Login</span></h5> -->
                     </div>

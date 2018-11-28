@@ -29,11 +29,32 @@
 
 .schedule_info_div .schedule_info_block {
     /*border: black solid 1px;*/
+    margin-bottom: 5%;
     text-align: left;
     padding: 20px 15px 20px 15px;
     background-color: #52C5BE;
 }
 
+.schedule_info_div .avail_hour_block {
+    /*border: black solid 1px;*/
+    margin-bottom: 5%;
+    text-align: left;
+    padding: 20px 15px 20px 15px;
+    background-color: #e1b676;
+}
+
+.schedule_info_div #avail_hour_h4 {
+   width: 100%; 
+   text-align: center; 
+   border-bottom: 1px solid #bababa; 
+   line-height: 0.1em;
+   margin: 15% 0 20px; 
+}
+
+.schedule_info_div #avail_hour_h4 span { 
+    background:#2cb5ab; 
+    padding:0 10px; 
+}
 
 .month {
     padding: 40px 25px;
@@ -76,21 +97,21 @@
 .weekdays {
     margin: 0;
     padding: 10px 0;
-    background-color: #ddd;
+    /*background-color: #ddd;*/
 }
 
 .weekdays li {
     display: inline-block;
     width: 13.6%;
-    color: #666;
+    /*color: #666;*/
     text-align: center;
-    font-weight: bold;
+    font-weight: bolder;
     font-size: 1.2em;
 }
 
 .days {
     padding: 10px 0;
-    background: #eee;
+    /*background: #eee;*/
     margin: 0;
     height: 50%;
 }
@@ -103,23 +124,39 @@
     text-align: center;
     margin-bottom: 5px;
     font-size:12px;
-    color: #777;
+    /*color: #777;*/
 }
 
 .days li .today_day {
-    padding: 5px;
+    /*padding: 5px;*/
     background: #2cb5ab;
-    color: white !important
+    color: white !important;
+    border-radius: 2px;
 }
 
+
 .days li .scheduled_day{
-    padding: 5px;
+    /*padding: 5px;*/
     border: #2cb5ab 1px solid;
+    border-radius: 2px;
+}
+
+.days li .available_day{
+    padding: 1.5em 0;
+    border-bottom: 2px solid #feb64d;
 }
 
 .days .day{
     font-size: 1.5em;
+    width: 2em;
+    height: 2em;
+    padding-top: 3%;
+    display: inline-block;
 }
+
+/*.days .day_outer_underline{
+    padding
+}*/
 
 #add_available_hour_div {
     width: 15em;

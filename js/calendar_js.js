@@ -58,26 +58,62 @@ function display_calendar(displayed_year,displayed_month) {
 
 		//start the int days of current month
 		for (var new_date = 1; new_date < last_date_of_displayed_month+1; new_date++) {
+			//class name for weekdays span
+			var new_date_obj = new Date(displayed_year,displayed_month-1,new_date);
+		    var new_date_weekday = weekday_int_text(new_date_obj.getDay()) ;
 			if (new_date==today_dd && displayed_month==today_mm) {
 				//if it's today, highlight with background color
-		        $(".user_calendar_div .days").append("<li><span class='today_day day pointer'>"+today_dd+"</span></li>");
+		        $(".user_calendar_div .days").append("<li><span id='day"+new_date+"' class='day_outer_underline  "+new_date_weekday+"'><span class='today_day day pointer'>"+today_dd+"</span></span></li>");
 		    }else{
 		    	var scheduled_dates_string = JSON.stringify(scheduled_dates);
 		    	var displayed_dates_string = JSON.stringify([displayed_year,displayed_month,new_date]);
 		    	var idx = scheduled_dates_string.indexOf(displayed_dates_string);
-		    	
+
 		    	// if (scheduled_dates.includes([displayed_year,displayed_month,new_date])) {
 		    	if (idx != -1){
 		    		//if the date is scheduled, highlight with border color
-		    		$(".user_calendar_div .days").append("<li><span class='scheduled_day day pointer'>"+new_date+"</span></li>");
+		    		$(".user_calendar_div .days").append("<li><span id='day"+new_date+"' class='day_outer_underline  "+new_date_weekday+"'><span class='scheduled_day day pointer'>"+new_date+"</span></span></li>");
 		    	}else{
-		    		$(".user_calendar_div .days").append("<li><span class='day pointer'>"+new_date+"</span></li>");
+		    		$(".user_calendar_div .days").append("<li><span id='day"+new_date+"' class='day_outer_underline  "+new_date_weekday+"'><span class='day pointer'>"+new_date+"</span></span></li>");
 		    	}
-		    	
-
-		        
 		    }
-		}
+		}//finished displayed dates with scheduled
+
+		//now display available schedule
+		//nested ajax
+		var request2 = $.ajax({
+			url: "/ajax_php/get_available_hours.php",
+			dataType: "JSON",
+
+		});
+
+		request2.fail(function(xhr, status, error) {
+			console.log("failed");
+			console.log(xhr);
+			console.log(status);
+			console.log(error);
+		});
+
+		request2.done(function(data2) {
+			for (var j = 0; j < data2.length; j++) {
+				var avail_hour = data2[j];
+				var date_j = avail_hour.date;
+				var weekday_j = avail_hour.weekdays;
+				var repeat_j = avail_hour.repeat;
+
+				if (repeat_j=="true") {
+					$("."+weekday_j).addClass("available_day");
+				}else{
+					var t = date_j.split('-');
+					
+					if (displayed_year==parseInt(t[0]) && displayed_month==parseInt(t[1])) {
+						$("#day"+t[2]).addClass("available_day");
+					}
+				}
+
+			}
+		});
+
 
 	});
 
@@ -159,6 +195,49 @@ function display_left_schedule(input_year, input_month, input_date) {
 				$(".schedule_info_div").append(schedule_block_str);
 			}
 		}
+		//done for displaying schedule for selected date
+		//nested ajax: display available hours for selected date
+		var selected_date_obj = new Date(input_year,input_month,input_date);
+		var selected_date_weekday = weekday_int_text(selected_date_obj.getDay()) ;
+		console.log(input_year,input_month+1,input_date,selected_date_weekday);
+
+		var request2 = $.ajax({
+			type: 'POST',
+			url: "/ajax_php/get_available_hours_on_date.php",
+			dataType: "JSON",
+			data: {
+					input_year: input_year,
+					input_month: input_month+1,
+					input_date: input_date,
+					input_weekday: selected_date_weekday
+				  }
+		});
+
+		request2.fail(function(xhr, status, error) {
+			console.log("failed");
+			console.log(xhr);
+			console.log(status);
+			console.log(error);
+		});
+
+		request2.done(function(data2) {
+			$("#avail_hour_h4").remove();
+			$(".avail_hour_block").remove();
+			if (data2.length!=0) {
+				$(".schedule_info_div").append("<h4 id='avail_hour_h4'><span>Available Hours</span></h4>");
+				for (var j = 0; j < data2.length; j++) {
+					var weekday = data2[j].weekdays;
+					var start_time = data2[j].start_time.slice(0,5);
+					var end_time = data2[j].end_time.slice(0,5);
+				
+					var avail_block_str = '<div class="avail_hour_block" id="avail_hour_block_'+schedule_id+'">';
+					avail_block_str += '<span>'+weekday+' '+start_time+'-'+end_time+'</span>';
+					avail_block_str += '</div>';
+					$(".schedule_info_div").append(avail_block_str);
+				}
+				
+			}
+		});
 		
 
 

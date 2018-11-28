@@ -10,11 +10,11 @@
 }
 
 #switch_register_span{
-  color: #7ebbed;
+  color: #515067;
 }
 
 #switch_login_span{
-  color: #c18743;
+  color: #fb617f;
 }
 
 .vertical_align {
@@ -37,7 +37,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #eddaaa/*#ccc*/;
+  background-color: #edd2d2/*#ccc*/;
   -webkit-transition: .4s;
   transition: .4s;
 }
@@ -55,12 +55,12 @@
 }
 
 input:checked + .slider {
-  background-color: #a7cfef/*#2196F3*/;
+  background-color: #beccd7;
 }
 
-input:focus + .slider {
-  box-shadow: 0 0 1px #a7cfef/*#2196F3*/;
-}
+/*input:focus + .slider {
+  box-shadow: 0 0 1px #a7cfef;
+}*/
 
 input:checked + .slider:before {
   -webkit-transform: translateX(26px);

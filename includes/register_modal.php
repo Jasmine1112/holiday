@@ -2,7 +2,9 @@
     <h3>Register</h3>
     <!-- <span class="lnr lnr-cross-circle exit pointer"></span> -->
     <div id="register_form">
-        <span class='register_span'>USERNAME</span> <input type="text" id="register_username_input"> <br>
+        <!-- <span class='register_span'>USERNAME</span> <input type="text" id="register_username_input"> <br> -->
+        <span class='register_span'>FIRST NAME</span> <input type="text" id="register_first_name_input"> <br>
+        <span class='register_span'>LAST NAME</span> <input type="text" id="register_last_name_input"> <br>
         <span class='register_span'>EMAIL</span> <input type="text" id="register_email_input"> <br>
         <span class='register_span'>PASSWORD</span> <input type="password" id="register_password_input"> <br>
         <span class='register_span'>TYPE PASSWORD AGAIN</span> <input type="password" id="register_password_again_input"> <br>

@@ -35,10 +35,7 @@
                         <img src="../img/Login2.jpg" class="home_page_img">
                         <p>We make appointments easier.</p>
                     </div>
-                    
-                    <div id="login_div">
-                        <!-- <h5><span id="log_in_status_span" class="pointer" onclick="display_modal('login_form_div')">假装在右上角的Login</span></h5> -->
-                    </div>
+
                     <div class="modal_right">
                         <div class="center" id="toggle_switch_div">
                             <span id="switch_login_span">Log In</span>
@@ -100,8 +97,21 @@
                         <div class="container-fluid">
                             <div class="row full_screen_height">
                                 <div class="user_info_div col-lg-3">
-                                    <span id="edit_user_button" class="green_border_button">Edit</span><br>
-                                    <img src="../img/Portrait_Placeholder.png" id="portrait_img"><br>
+                                    <?php
+                                        if ($_SESSION['logged_user_type']=="Student") {
+                                            echo '<span id="edit_user_button" class="green_border_button">Edit</span><br>';
+                                        }elseif ($_SESSION['logged_user_type']=="Faculty") {
+                                            echo '<span id="edit_faculty_button" class="green_border_button">Edit</span><br>';
+                                        }
+                                    ?>
+                                    <?php
+                                        if ($_SESSION['logged_user_type']=="Student") {
+                                            echo '<img src="../img/student_profile.jpeg" id="portrait_img"><br>';
+                                        }elseif ($_SESSION['logged_user_type']=="Faculty") {
+                                            echo '<img src="../img/faculty_profile.jpeg" id="portrait_img"><br>';
+                                        }
+                                    ?>
+                                    <!-- <img src="../img/Portrait_Placeholder.png" id="portrait_img"><br> -->
                                     <span id="user_name">
                                         <?php
                                             echo $info_row['first_name'];
@@ -125,29 +135,32 @@
                             ?>
                                     <div class="user_funtionality_div col-lg-9">
                                         <div class="row half_screen_height">
+
                                             <div class="col-lg-5 full_row_height functionality_grid" id="schedule_appointment_grid">
                                                 <a href="schedule_appointment.php">
                                                     <img src="../img/schedule_appointment_icon.png">
                                                 </a>
                                                 <!-- <span>Schedule an Appointment</span> -->
                                             </div>
-
                                             <div class="col-lg-5 full_row_height functionality_grid" id="view_schedule_grid">
                                                 <a href="calendar.php">
                                                     <img src="../img/view_schedule_icon.png">
                                                 </a>
-                                                
                                             </div>
                                         </div>
+
                                         <div class="row half_screen_height">
                                             <div class="col-lg-5 full_row_height functionality_grid" id="change_appointment_grid">
                                                 <a href="edit_appointment.php">
                                                     <img src="../img/change_appointment_icon.png">
                                                 </a>
-                                                
                                             </div>
+
                                             <div class="col-lg-5 full_row_height functionality_grid" id="view_message_grid">
-                                                <img src="../img/view_message_icon.png">
+                                                <a href="under_construction.php">
+                                                    <img src="../img/view_message_icon.png">
+                                                </a>
+                                                
                                             </div>
                                         </div>
                                         
@@ -160,26 +173,36 @@
                             ?>
                                     <div class="user_funtionality_div col-lg-9">
                                         <div class="row half_screen_height">
-                                            <div class="col-lg-5 full_row_height functionality_grid" id="edit_office_hour_grid">
-                                                <img src="../img/edit_office_hour_icon.png">
+                                            <div class="col-lg-5 full_row_height functionality_grid" id="view_schedule_grid">
+                                                <a href="view_faculty_schedule.php">
+                                                    <img src="../img/view_schedule_icon.png">
+                                                </a>
                                             </div>
 
-                                            <div class="col-lg-5 full_row_height functionality_grid" id="view_schedule_grid">
-                                                <img src="../img/view_schedule_icon.png">
+                                            <div class="col-lg-5 full_row_height functionality_grid" id="schedule_appointment_grid">
+                                                <a href="set_hours.php">
+                                                    <img src="../img/set_hours_icon.png">
+                                                </a>
                                             </div>
                                         </div>
+
                                         <div class="row half_screen_height">
-                                            <div class="col-lg-5 full_row_height functionality_grid" id="statistics_grid">
-                                                <img src="../img/statistics_icon.png">
+                                            <div class="col-lg-5 full_row_height functionality_grid" id="change_appointment_grid">
+                                                <a href="edit_appointment.php">
+                                                    <img src="../img/change_appointment_icon.png">
+                                                </a>
                                             </div>
+
                                             <div class="col-lg-5 full_row_height functionality_grid" id="view_message_grid">
-                                                <img src="../img/view_message_icon.png">
+                                                <a href="under_construction.php">
+                                                    <img src="../img/view_message_icon.png">
+                                                </a>
                                             </div>
                                         </div>
                                         
                                     </div> <!-- end of user functionality div -->
 
-                                    <?php include 'includes/student_edit_info_div.php';?>
+                                    <?php include 'includes/faculty_edit_info_div.php';?>
 
 
                             <?php

@@ -12,6 +12,7 @@
     padding-left: 10%;
     padding-right: 10%;
     padding-top: 5vw;
+    padding-bottom: 8vw;
     background: white;
 }
 
@@ -64,6 +65,7 @@
 
 .schedules_to_change_div{
     margin-top: 3em;
+    margin-bottom: 8em;
 }
 .schedules_to_change_div h3{
     font-size: 1.5em;
@@ -80,6 +82,10 @@
 
 .schedules_to_change_div .table_header th{
     font-weight: bold;
+}
+
+.schedules_to_change_div .approve_request{
+    margin-right: 1.5em;
 }
 
 .schedules_to_change_div .change_upcoming{
@@ -143,6 +149,25 @@
     margin-right: auto;
     padding: 10px;
 }
+
+.new_red_circle{
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    background-color: #eb3f57;
+    border-radius: 50%;
+    float: left;
+    margin-top: -1em;
+}
+
+.none_result_span{
+    margin-top: 1em;
+    font-size: 1.5em;
+    display: block;
+    text-align: center;
+}
+
+
 
 
 

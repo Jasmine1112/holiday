@@ -49,7 +49,7 @@
 	// $username = $login_result[1]['username'];
 	// $user_first_name = $login_result[1]['first_name'];
 	// $user_last_name = $login_result[1]['last_name'];
-	// $user_type = $login_result[1]['user_type'];
+	$user_type = $login_result[1]['user_type'];
 	$user_id = $login_result[1]['user_id'];
 	// $user_affiliation = $login_result[1]['affiliation'];
 	if ($valid_login){
@@ -57,7 +57,7 @@
 		// $_SESSION['logged_user_first_name'] = $user_first_name;
 		// $_SESSION['logged_user_last_name'] = $user_last_name;
 		$_SESSION['logged_user_id'] = $user_id;
-		// $_SESSION['logged_user_type'] = $user_type;
+		$_SESSION['logged_user_type'] = $user_type;
 		// $_SESSION['logged_user_affiliation'] = $user_affiliation;
 
 	} else {

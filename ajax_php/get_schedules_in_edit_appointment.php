@@ -16,22 +16,31 @@
 	}
 
 	//check if username exists
-	if ($appoint_type=="request_status") {
+	if ($appoint_type=="waiting_request") {
 		$query = "SELECT *, $logged_user_id AS logged_user_id
 				FROM schedules S, users U
-				WHERE ((S.user_id_1 = $logged_user_id AND S.user_id_2 = U.user_id) OR (S.user_id_2 = $logged_user_id AND S.user_id_1 = U.user_id))
-						AND status = 'pending';";
+				WHERE (S.user_id_2 = $logged_user_id AND S.user_id_1 = U.user_id)
+						AND status = 'pending'
+				ORDER BY S.time DESC;";
+	}elseif ($appoint_type=="request_status") {
+		$query = "SELECT *, $logged_user_id AS logged_user_id
+				FROM schedules S, users U
+				WHERE (S.user_id_1 = $logged_user_id AND S.user_id_2 = U.user_id)
+						AND status = 'pending'
+				ORDER BY S.time DESC;";
 	}elseif ($appoint_type=="upcoming_schedules") {
 		$query = "SELECT *, $logged_user_id AS logged_user_id
 				FROM schedules S, users U
 				WHERE ((S.user_id_1 = $logged_user_id AND S.user_id_2 = U.user_id) OR (S.user_id_2 = $logged_user_id AND S.user_id_1 = U.user_id))
 						AND status = 'upcoming'
-						AND `time` >= now();";
+						AND `time` >= now()
+				ORDER BY S.time DESC;";
 	}elseif ($appoint_type=="past_schedules") {
 		$query = "SELECT *, $logged_user_id AS logged_user_id
 				FROM schedules S, users U
 				WHERE ((S.user_id_1 = $logged_user_id AND S.user_id_2 = U.user_id) OR (S.user_id_2 = $logged_user_id AND S.user_id_1 = U.user_id))
-						AND `time` < now();";
+						AND (`time` < now() OR `status` = 'past') 
+				ORDER BY S.time DESC;";
 	}
 	
 

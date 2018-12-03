@@ -14,7 +14,7 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <link rel="stylesheet" href="https://cdn.linearicons.com/free/1.0.0/icon-font.min.css">
         <script src="js/main_index_js.js"></script>
-        <script src="js/calendar_js.js"></script>
+        <script src="faculty_js/view_faculty_schedule_js.js"></script>
 
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -30,7 +30,7 @@
                 <!-- <h1>THIS IS HOMEPAGE</h1> -->
                 <?php
                     //if the user hasn't logged in
-                    if ( !isset($_SESSION['logged_user_id'] ) ||  $_SESSION['logged_user_type']!="Student") {
+                    if ( !isset($_SESSION['logged_user_id'] ) ||  $_SESSION['logged_user_type']!="Faculty") {
                         header("Location: index.php");
                     }else{
                         //if the user has already logged in
@@ -83,6 +83,7 @@
                         // $first_weekday_int = date('N',mktime(null,null,null,$cur_month,1,$cur_year));
                         // $last_date_of_month = date('t', mktime(null,null,null,$cur_month,$cur_date,$cur_year));
                 ?>
+
                         <div class="container-fluid">
                             <div class="row full_screen_height">
                                 <div class="schedule_info_div col-lg-3" id="schedule_info_div">
@@ -93,23 +94,7 @@
 
                                 </div> <!-- end of schedule info div -->
                                 <div class="user_calendar_div col-lg-9">
-                                    <div id='add_available_hour_div'>
-                                        <input type="hidden" id="add_avail_year">
-                                        <input type="hidden" id="add_avail_month">
-                                        <input type="hidden" id="add_avail_date">
-                                        <h5>Available Hour</h5>
-                                        <div>
-                                            <span class="bold_font-weight">Time:</span><br>
-                                            <span class="indent">Start </span><input type="time" id="avai_hour_start_time_input" placeholder="hh:mm"><br>
-                                            <span class="indent">End </span><input type="time" id="avai_hour_end_time_input" placeholder="hh:mm"><br>
-                                            <span class="bold_font-weight">Repeat:</span> <input type="checkbox" id="repeat_checkbox"><span class="indent light_font-weight">Every week</span><br>
-                                            <span class="bold_font-weight">Location:</span><br>
-                                            <input type="text" id="avai_hour_location_input"><br>
-                                        </div>
-                                        
-                                        <span id="set_avai_hour_button">Set</span>
-
-                                    </div>
+                                    
                                     <a href="index.php" class="back_to_home_button"><span class="lnr lnr-arrow-left"></span>Back</a>
                                     <div class="month">
                                         <span class="prev_month_pointer switch_month">&#10094;</span>

@@ -35,12 +35,46 @@
     background-color: #52C5BE;
 }
 
+.schedule_info_div .schedule_info_block_detail{
+    padding: 15px;
+
+}
+
+.schedule_info_div .schedule_info_block_detail .bold_header {
+    font-size: 1.1em;
+    font-weight: bolder;
+}
+
+.schedule_info_div .schedule_info_block_detail .underline_header {
+    padding: 2px;
+    font-size: 1.1em;
+    border-bottom: 1px solid white;
+    width: 80%;
+    display: inline-block;
+}
+
 .schedule_info_div .avail_hour_block {
     /*border: black solid 1px;*/
     margin-bottom: 5%;
     text-align: left;
     padding: 20px 15px 20px 15px;
     background-color: #e1b676;
+}
+
+.avail_hour_block .delete_avail_sign{
+    height: 2em;
+    float: right;
+    margin-top: -0.2em;
+    cursor: pointer;
+    display: none;
+}
+.avail_hour_block .delete_avail_button{
+    height: 2em;
+    float: right;
+    cursor: pointer;
+    display: none;
+    color: #eb3f57;
+    font-weight: bolder;
 }
 
 .schedule_info_div #avail_hour_h4 {
@@ -128,11 +162,16 @@
 }
 
 .days li .today_day {
-    /*padding: 5px;*/
     background: #2cb5ab;
     color: white !important;
     border-radius: 2px;
 }
+
+.days li .right_clicked {
+    border: 1px #2cb5ab solid;
+    border-radius: 50%;
+}
+
 
 
 .days li .scheduled_day{
@@ -143,7 +182,12 @@
 
 .days li .available_day{
     padding: 1.5em 0;
-    border-bottom: 2px solid #feb64d;
+    border-bottom: 2px solid #e1b676;
+}
+
+.days li .oh_day{
+    padding: 2.2em 0;
+    border-bottom: 2px solid #4e79d7;
 }
 
 .days .day{
@@ -170,26 +214,174 @@
     background: #FFF;
     color: #333;
     border-radius: 5px;
-    padding: 1em;
+    padding: 0;
 }
 
+#add_available_hour_div h5 {
+    background-color: #2cb5ab;
+    margin: 0;
+    padding: 12px;
+    font-size: 1.2em;
+}
 
+#add_available_hour_div div {
+    margin: 10%;
 
+}
 
-
-
-/* Each of the items in the list */
-/*.custom-menu li {
-    padding: 8px 12px;
+#add_available_hour_div #set_avai_hour_button{
+    display: block;
+    text-align: center;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    margin-left: auto;
+    margin-right: auto;
+    width: 40%;
+    color: white;
+    border-radius: 10px;
+    padding-top: 8px;
+    padding-bottom: 8px;
     cursor: pointer;
-    list-style-type: none;
-    transition: all .3s ease;
-    user-select: none;
+    background-color: #2cb5ab;
 }
 
-.custom-menu li:hover {
-    background-color: #DEF;
-}*/
+#add_available_hour_div #avai_hour_location_input {
+    border-bottom: solid 1px grey;
+    width: 100%;
+    padding: 0.2em;
+    padding-bottom: 0.4em;
+    color: #3c3c3c;
+}
+
+#add_available_hour_div .indent {
+    margin-left: 10%;
+
+}
+
+#add_available_hour_div .bold_font-weight {
+    font-weight: bolder;
+    font-size: 1.1em;
+
+}
+
+
+#add_available_hour_div .light_font-weight {
+    font-weight: lighter;
+
+}
+
+
+
+/* SET HOURS for FACULTY*/
+
+.filter_span{
+    margin: 0 1em;
+    cursor: pointer;
+}
+
+.filter_span.disabled{
+    color: grey;
+}
+
+.schedule_info_div .office_hour_block {
+    /*border: black solid 1px;*/
+    margin-bottom: 5%;
+    text-align: left;
+    padding: 20px 15px 20px 15px;
+    background-color: #4e79d7;
+}
+
+.office_hour_block .delete_office_sign{
+    height: 2em;
+    float: right;
+    margin-top: -0.2em;
+    cursor: pointer;
+    display: none;
+}
+.office_hour_block .delete_office_button{
+    height: 2em;
+    float: right;
+    cursor: pointer;
+    display: none;
+    color: #972636;
+    font-weight: bolder;
+}
+
+.schedule_info_div #office_hour_h4 {
+   width: 100%; 
+   text-align: center; 
+   border-bottom: 1px solid #bababa; 
+   line-height: 0.1em;
+   margin: 15% 0 20px; 
+}
+
+.schedule_info_div #office_hour_h4 span { 
+    background:#2cb5ab; 
+    padding:0 10px; 
+}
+
+
+#add_available_hour_div select {
+    color: white;
+    width: 100%;
+    height: 3em;
+    background-color: #e1b676;
+    margin: 0;
+    padding: 12px;
+    font-size: 1.2em;
+    /*-webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;*/
+}
+
+
+#set_oh_div{
+    display: none;
+}
+
+#set_oh_div #set_oh_button{
+    display: block;
+    text-align: center;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    margin-left: auto;
+    margin-right: auto;
+    width: 40%;
+    color: white;
+    border-radius: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    cursor: pointer;
+    background-color: #4e79d7;
+}
+
+#set_ah_div #set_ah_button{
+    display: block;
+    text-align: center;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    margin-left: auto;
+    margin-right: auto;
+    width: 40%;
+    color: white;
+    border-radius: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    cursor: pointer;
+    background-color: #e1b676;
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

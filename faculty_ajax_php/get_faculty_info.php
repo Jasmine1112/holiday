@@ -3,8 +3,6 @@
 	session_start();
 	require_once '../includes/config.php';
 
-	$schedule_id = $_GET['schedule_id'];
-
 	$logged_user_id = $_SESSION['logged_user_id'];
 
 	$mysqli = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
@@ -16,11 +14,8 @@
 	}
 
 	//check if username exists
-	$query = "UPDATE schedules
-				SET status = 'past', seen_by_user1 = 'false', seen_by_user2 = 'false'
-				WHERE schedule_id = $schedule_id AND (user_id_1 = $logged_user_id OR user_id_2 = $logged_user_id);";
-	
-
+	$query = "SELECT * FROM users WHERE user_id = $logged_user_id;";
+		
 	$stmt = $mysqli->stmt_init();
 
 	if ($stmt->prepare($query)) {
@@ -32,11 +27,19 @@
 	} else {
 		print("<p>Error with register submission1</p>");
 	}
-
 	mysqli_stmt_close($email_stmt);
-	
-	mysqli_close($mysqli);
 
+	
+	if($info_result && $info_result->num_rows == 1) {
+		$info_row = $info_result->fetch_assoc();
+		echo json_encode($info_row);
+
+	}else{	
+		print("<p>Email already used!</p>");
+	}
+
+
+	mysqli_close($mysqli);
 
 
 

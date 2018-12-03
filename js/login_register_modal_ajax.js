@@ -36,13 +36,15 @@ $(document).ready( function () {
 
 	//register username and password in login modal
 	$("#register_form #register_button").on("click",function() {
-		var username_input = $("#register_form #register_username_input").val();
+		// var username_input = $("#register_form #register_username_input").val();
+		var first_name_input = $("#register_form #register_first_name_input").val();
+		var last_name_input = $("#register_form #register_last_name_input").val();
 		var email_input = $("#register_form #register_email_input").val();
 		var password_input = $("#register_form #register_password_input").val();
 		var password_again_input = $("#register_form #register_password_again_input").val();
 		var type_input = $("#register_form #register_type_input").val();
 
-		if (!username_input || !email_input || !password_input || !password_input) {
+		if (!first_name_input || !last_name_input || !email_input || !password_input || !password_input) {
 			//check for empty input fields
 			alert("fill out all fields!");
 		}
@@ -52,7 +54,9 @@ $(document).ready( function () {
 			var request = $.ajax({
 				type: 'POST',
 				url: "/ajax_php/register_user.php",
-				data: { username_input: username_input, 
+				data: { //username_input: username_input, 
+						first_name_input: first_name_input,
+						last_name_input: last_name_input,
 						email_input: email_input, 
 						password_input: password_input,
 						type_input: type_input

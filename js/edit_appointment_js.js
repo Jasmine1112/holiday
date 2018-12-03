@@ -85,63 +85,135 @@ function display_appointments(appoint_type) {
 	});
 
 	request.done(function(data) {
+		var logged_user_id = $("#logged_user_id").val();
 		
 		//display the 3 div!!!
-		if (appoint_type=="request_status") {
-			$("#request_status_table .request_status_rows").remove();
-			for (var i = 0; i < data.length; i++) {
-				var schedule = data[i];
-				
-				var tr_str = "<tr class='request_status_rows'>";
-				tr_str += "<th>"+schedule.meeting_subject+"</th>";
-				tr_str += "<th>"+schedule.first_name+" "+schedule.last_name+"</th>";
-				tr_str += "<th>"+schedule.time+"</th>";
-				tr_str += "<th>"+schedule.location+"</th>";
-				tr_str += "<th><span class='wait_button'>Waiting</span></th>";
+		if (appoint_type=="waiting_request") {
+			$("#waiting_request_table .waiting_request_rows").remove();
+			$("#empty_waiting_request_span").remove();
 
-				$("#request_status_table").append(tr_str);
+			if (data.length==0) {
+				$("#waiting_request_table").after("<span id='empty_waiting_request_span' class='none_result_span'>None</span>");
+			}else{
+				for (var i = 0; i < data.length; i++) {
+					var schedule = data[i];
+					
+					var tr_str = "<tr class='waiting_request_rows'>";
+
+					if ((schedule.user_id_1==logged_user_id && schedule.seen_by_user1=='false') || (schedule.user_id_2==logged_user_id && schedule.seen_by_user2=='false')) {
+						tr_str += "<th><span class='new_red_circle'></span>"+schedule.meeting_subject+"</th>";
+					}else{
+						tr_str += "<th>"+schedule.meeting_subject+"</th>";
+					}
+
+					tr_str += "<th>"+schedule.first_name+" "+schedule.last_name+"</th>";
+					tr_str += "<th>"+schedule.time+"</th>";
+					tr_str += "<th>"+schedule.location+"</th>";
+					tr_str += "<th><span class='action_button green_button approve_request' id='approve_request_"+schedule.schedule_id+"' onClick='display_change_schedule("+JSON.stringify(schedule)+")'>Approve</span>";
+					tr_str += "<span class='action_button red_button decline_request' id='decline_request_"+schedule.schedule_id+"'>Decline</span>";
+					tr_str += "</tr>";
+					$("#waiting_request_table").append(tr_str);
+				}
+			}
+			
+			
+		}else if (appoint_type=="request_status") {
+			$("#request_status_table .request_status_rows").remove();
+			$("#empty_request_status_span").remove();
+
+			if (data.length==0) {
+				$("#request_status_table").after("<span id='empty_request_status_span' class='none_result_span'>None</span>");
+			}else{
+				for (var i = 0; i < data.length; i++) {
+					var schedule = data[i];
+					// console.log(schedule.user_id_1, schedule.seen_by_user1);
+					
+					var tr_str = "<tr class='request_status_rows'>";
+
+					if ((schedule.user_id_1==logged_user_id && schedule.seen_by_user1=='false') || (schedule.user_id_2==logged_user_id && schedule.seen_by_user2=='false')) {
+						tr_str += "<th><span class='new_red_circle'></span>"+schedule.meeting_subject+"</th>";
+					}else{
+						tr_str += "<th>"+schedule.meeting_subject+"</th>";
+					}
+
+					tr_str += "<th>"+schedule.first_name+" "+schedule.last_name+"</th>";
+					tr_str += "<th>"+schedule.time+"</th>";
+					tr_str += "<th>"+schedule.location+"</th>";
+					tr_str += "<th><span class='wait_button'>Waiting</span></th>";
+					tr_str += "</tr>";
+					$("#request_status_table").append(tr_str);
+				}
 			}
 			
 		}else if (appoint_type=="upcoming_schedules") {
 			// console.log(data);
 			$("#upcoming_schedules_table .upcoming_schedules_rows").remove();
-			for (var i = 0; i < data.length; i++) {
-				var schedule = data[i];
-				
-				var tr_str = "<tr class='upcoming_schedules_rows'>";
-				tr_str += "<th>"+schedule.meeting_subject+"</th>";
-				tr_str += "<th>"+schedule.first_name+" "+schedule.last_name+"</th>";
-				tr_str += "<th>"+schedule.time+"</th>";
-				tr_str += "<th>"+schedule.location+"</th>";
-				tr_str += "<th><span class='action_button red_button change_upcoming' id='change_"+schedule.schedule_id+"' onClick='display_change_schedule("+JSON.stringify(schedule)+")'>Change</span>";
-				tr_str += "<span class='action_button grey_button cancel_upcoming' id='cancel_"+schedule.schedule_id+"'>Cancel</span>";
-				tr_str += "</th>"; 
+			$("#empty_upcoming_schedules_span").remove();
 
-				$("#upcoming_schedules_table").append(tr_str);
+			if (data.length==0) {
+				$("#upcoming_schedules_table").after("<span id='empty_upcoming_schedules_span' class='none_result_span'>None</span>");
+			}else{
+				for (var i = 0; i < data.length; i++) {
+					var schedule = data[i];
+
+					
+					var tr_str = "<tr class='upcoming_schedules_rows'>";
+
+					if ((schedule.user_id_1==logged_user_id && schedule.seen_by_user1=='false') || (schedule.user_id_2==logged_user_id && schedule.seen_by_user2=='false')) {
+						tr_str += "<th><span class='new_red_circle'></span>"+schedule.meeting_subject+"</th>";
+					}else{
+						tr_str += "<th>"+schedule.meeting_subject+"</th>";
+					}
+
+					tr_str += "<th>"+schedule.first_name+" "+schedule.last_name+"</th>";
+					tr_str += "<th>"+schedule.time+"</th>";
+					tr_str += "<th>"+schedule.location+"</th>";
+					tr_str += "<th><span class='action_button red_button change_upcoming' id='change_"+schedule.schedule_id+"' onClick='display_change_schedule("+JSON.stringify(schedule)+")'>Change</span>";
+					tr_str += "<span class='action_button grey_button cancel_upcoming' id='cancel_"+schedule.schedule_id+"'>Cancel</span>";
+					tr_str += "</th>"; 
+					tr_str += "</tr>";
+					$("#upcoming_schedules_table").append(tr_str);
+				}
 			}
+			
 		}else if (appoint_type=="past_schedules") {
 			// console.log(data);
 			$("#past_schedules_table .past_schedules_rows").remove();
-			for (var i = 0; i < data.length; i++) {
-				var schedule = data[i];
-				
-				var tr_str = "<tr class='past_schedules_rows'>";
-				tr_str += "<th>"+schedule.meeting_subject+"</th>";
-				tr_str += "<th>"+schedule.first_name+" "+schedule.last_name+"</th>";
-				tr_str += "<th>"+schedule.time+"</th>";
-				tr_str += "<th>"+schedule.location+"</th>";
-				tr_str += "<th><a href='schedule_appointment.php?name="+schedule.username+"&department="+schedule.college_department+"&subject="+schedule.meeting_subject+"&note="+schedule.notes+"' class='action_button red_button reschedule_past' id='reschedule_"+schedule.schedule_id+"'>Reschedule</a>";
-				tr_str += "</th>";
+			$("#empty_past_schedules_span").remove();
 
-				$("#past_schedules_table").append(tr_str);
+			if (data.length==0) {
+				$("#past_schedules_table").after("<span id='empty_past_schedules_span' class='none_result_span'>None</span>");
+			}else{
+				for (var i = 0; i < data.length; i++) {
+					var schedule = data[i];
+					
+					var tr_str = "<tr class='past_schedules_rows'>";
+
+					if ((schedule.user_id_1==logged_user_id && schedule.seen_by_user1=='false') || (schedule.user_id_2==logged_user_id && schedule.seen_by_user2=='false')) {
+						tr_str += "<th><span class='new_red_circle'></span>"+schedule.meeting_subject+"</th>";
+					}else{
+						tr_str += "<th>"+schedule.meeting_subject+"</th>";
+					}
+
+					tr_str += "<th>"+schedule.first_name+" "+schedule.last_name+"</th>";
+					tr_str += "<th>"+schedule.time+"</th>";
+					tr_str += "<th>"+schedule.location+"</th>";
+					tr_str += "<th><a href='schedule_appointment.php?name="+schedule.username+"&department="+schedule.college_department+"&subject="+schedule.meeting_subject+"&note="+schedule.notes+"' class='action_button red_button reschedule_past' id='reschedule_"+schedule.schedule_id+"'>Reschedule</a>";
+					tr_str += "</th>";
+					tr_str += "</tr>";
+
+					$("#past_schedules_table").append(tr_str);
+				}
 			}
+			
+			
 		}
 	});
 }
 
 function display_change_schedule(schedule) {
 	//display the input from display schedule to be changed
-	console.log(schedule);
+	// console.log(schedule);
 	var name = schedule.username;
 	var department = schedule.college_department;
 	var location = schedule.location;
@@ -170,10 +242,56 @@ function display_change_schedule(schedule) {
 	
 }
 
+
+function update_seen() {
+	var request = $.ajax({
+		type: 'GET',
+		url: "/ajax_php/change_schedule_to_seen.php"
+	});
+
+	request.fail(function(xhr, status, error) {
+		console.log("failed");
+		console.log(xhr);
+		console.log(status);
+		console.log(error);
+	});
+
+	request.done(function(data) {
+		console.log("hi");
+	});
+}
+
+//set all schedules to seen
+// $(window).on('load', function() {
+// 	var request = $.ajax({
+// 		type: 'GET',
+// 		url: "/ajax_php/change_schedule_to_seen.php"
+// 	});
+
+// 	request.fail(function(xhr, status, error) {
+// 		console.log("failed");
+// 		console.log(xhr);
+// 		console.log(status);
+// 		console.log(error);
+// 	});
+
+// 	request.done(function(data) {
+// 		console.log("hi2");
+// 	});
+
+// });
+
+
+
+
+
 $(document).ready( function () {
+	display_appointments("waiting_request");
 	display_appointments("request_status");
 	display_appointments("upcoming_schedules");
 	display_appointments("past_schedules");
+
+	update_seen();
 	
 
 	$(document).on("click", ".change_upcoming",function(event) {
@@ -246,7 +364,6 @@ $(document).ready( function () {
 
 	$("#cancel_schedule_button").on("click",function(event) {
 		var schedule_id = $("#hidden_schedule_id").val();
-		console.log(schedule_id);
 
 		var request = $.ajax({
 			type: 'GET',
@@ -266,8 +383,67 @@ $(document).ready( function () {
 		request.done(function(data) {
 			$("#confirm_cancel_modal").css("display","none");
 			display_appointments("upcoming_schedules");
+			display_appointments("past_schedules");
 		});
 	});
+
+
+	//approve request
+	$(document).on("click", ".approve_request",function(event) {
+		var schedule_id = $(this).attr("id").replace("approve_request_","");
+		console.log(schedule_id);
+
+		var request = $.ajax({
+			type: 'GET',
+			url: "/ajax_php/approve_pending_schedule.php",
+			data: {
+				schedule_id: schedule_id
+			}
+		});
+
+		request.fail(function(xhr, status, error) {
+			console.log("failed");
+			console.log(xhr);
+			console.log(status);
+			console.log(error);
+		});
+
+		request.done(function(data) {
+			display_appointments("waiting_request");
+			display_appointments("upcoming_schedules");
+		});
+	});
+
+	//decline request
+	$(document).on("click", ".decline_request",function(event) {
+		var schedule_id = $(this).attr("id").replace("decline_request_","");
+
+		var request = $.ajax({
+			type: 'GET',
+			url: "/ajax_php/decline_pending_schedule.php",
+			data: {
+				schedule_id: schedule_id
+			}
+		});
+
+		request.fail(function(xhr, status, error) {
+			console.log("failed");
+			console.log(xhr);
+			console.log(status);
+			console.log(error);
+		});
+
+		request.done(function(data) {
+			display_appointments("waiting_request");
+			display_appointments("past_schedules");
+		});
+	});
+
+
+
+
+
+
 
 	$(".back_to_schedule_button").on("click",function() {
 		$(".confirmation_modal").css("display","none");

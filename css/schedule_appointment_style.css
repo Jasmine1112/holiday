@@ -187,6 +187,27 @@
     padding-right: 20px;
 }
 
+
+#pending_schedule_confirmation_modal a.red_button:hover{
+    text-decoration: none;
+    color: white;
+}
+#pending_schedule_confirmation_modal a.dark_grey_button:hover{
+    text-decoration: none;
+    color: #e1e1e1;
+}
+
+#pending_schedule_confirmation_modal .red_button{
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-right: 2em;
+}
+
+#pending_schedule_confirmation_modal .dark_grey_button{
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
 /*.red_button {
     background-color: #eb3f57;
 }

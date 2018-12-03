@@ -33,26 +33,18 @@
                     if ( !isset($_SESSION['logged_user_id'] ) ) {
                         header("Location: index.php");
                     }else{
+                        $logged_user_id = $_SESSION['logged_user_id'];
                         //if the user has already logged in
                 ?>
+                        <?php
+                            echo '<input type="hidden" id="logged_user_id" value="'.$logged_user_id.'">';
+                        ?>
                         
+
                         <div id="edit_schedules_div">
                             <div>
                                 <a href="index.php" class="back_to_home_button"><span class="lnr lnr-arrow-left"></span>Back</a>
                                 <h2>Change Schedules</h2>
-                            </div>
-                            
-                            <div id="request_status_div" class="schedules_to_change_div">
-                                <h3>Request Status</h3>
-                                <table id="request_status_table">
-                                    <tr class="table_header">
-                                        <th>Meeting Subject</th>
-                                        <th>Who</th> 
-                                        <th>When</th>
-                                        <th>Where</th>
-                                        <th>Status</th>
-                                    </tr>
-                                </table>
                             </div>
 
                             <div id="upcoming_schedules_div" class="schedules_to_change_div">
@@ -64,6 +56,32 @@
                                         <th>When</th>
                                         <th>Where</th>
                                         <th>Action</th>
+                                    </tr>
+                                </table>
+                            </div>
+
+                            <div id="waiting_request_div" class="schedules_to_change_div">
+                                <h3>Waiting Request from Others</h3>
+                                <table id="waiting_request_table">
+                                    <tr class="table_header">
+                                        <th>Meeting Subject</th>
+                                        <th>Who</th> 
+                                        <th>When</th>
+                                        <th>Where</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </table>
+                            </div>
+                            
+                            <div id="request_status_div" class="schedules_to_change_div">
+                                <h3>Your Request Status</h3>
+                                <table id="request_status_table">
+                                    <tr class="table_header">
+                                        <th>Meeting Subject</th>
+                                        <th>Who</th> 
+                                        <th>When</th>
+                                        <th>Where</th>
+                                        <th>Status</th>
                                     </tr>
                                 </table>
                             </div>

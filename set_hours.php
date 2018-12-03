@@ -14,7 +14,7 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <link rel="stylesheet" href="https://cdn.linearicons.com/free/1.0.0/icon-font.min.css">
         <script src="js/main_index_js.js"></script>
-        <script src="js/calendar_js.js"></script>
+        <script src="faculty_js/set_hours_js.js"></script>
 
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -30,66 +30,20 @@
                 <!-- <h1>THIS IS HOMEPAGE</h1> -->
                 <?php
                     //if the user hasn't logged in
-                    if ( !isset($_SESSION['logged_user_id'] ) ||  $_SESSION['logged_user_type']!="Student") {
+                    if ( !isset($_SESSION['logged_user_id'] ) ) {
                         header("Location: index.php");
                     }else{
                         //if the user has already logged in
-
-
-                        // require_once 'includes/config.php';
-
-                        // $logged_user_id = $_SESSION['logged_user_id'];
-
-                        // $mysqli = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
-
-                        // if( $mysqli->connect_errno ) {
-                        //     //uncomment the next line for debugging
-                        //     echo "<p>$mysqli->connect_error<p>";
-                        //     die( "Couldn't connect to database");
-                        // }
-
-                        // //check if username exists
-                        // $query = "SELECT * FROM users WHERE user_id = $logged_user_id;";
-                            
-                        // $stmt = $mysqli->stmt_init();
-
-                        // if ($stmt->prepare($query)) {
-                        //     if (!$stmt->execute()){
-                        //         print("<p>Error with resgister submission</p>");
-                        //     } else {
-                        //         $info_result = $stmt->get_result();
-                        //     }
-                        // } else {
-                        //     print("<p>Error with register submission1</p>");
-                        // }
-                        // mysqli_stmt_close($email_stmt);
-                        
-                        // if($info_result && $info_result->num_rows == 1) {
-                        //     $info_row = $info_result->fetch_assoc();
-                        // }else{  
-                        //     print("<p>Email already used!</p>");
-                        // }
-
-                        // mysqli_close($mysqli);
-
-
-
-                        //check the first weekday of this month
-                        // $cur_date = date("j");
-                        // $cur_month = date("m");
-                        // $cur_month_text = date("F");
-                        // $cur_year = date("Y");
-                        // $first_weekday = date('l',mktime(null,null,null,$cur_month,1,$cur_year));
-                        // $first_weekday_int = date('N',mktime(null,null,null,$cur_month,1,$cur_year));
-                        // $last_date_of_month = date('t', mktime(null,null,null,$cur_month,$cur_date,$cur_year));
                 ?>
                         <div class="container-fluid">
                             <div class="row full_screen_height">
                                 <div class="schedule_info_div col-lg-3" id="schedule_info_div">
-                                    <h3 id="selected_date">TODAY</h3>
+                                    <span id="oh_filter_span" class="filter_span">Office Hours</span><span id="ah_filter_span" class="filter_span">Available Hours</span>
                                     <h1 id="selected_weekday"><?php echo date("l");?></h1>
+                                    <h3 id="selected_date">TODAY</h3>
                                     <!-- <div class="schedule_info_block">Meet with Zhang @3:30pm</div> -->
-
+                                    <div id="oh_info_div"></div>
+                                    <div id="ah_info_div"></div>
 
                                 </div> <!-- end of schedule info div -->
                                 <div class="user_calendar_div col-lg-9">
@@ -97,17 +51,35 @@
                                         <input type="hidden" id="add_avail_year">
                                         <input type="hidden" id="add_avail_month">
                                         <input type="hidden" id="add_avail_date">
-                                        <h5>Available Hour</h5>
-                                        <div>
-                                            <span class="bold_font-weight">Time:</span><br>
-                                            <span class="indent">Start </span><input type="time" id="avai_hour_start_time_input" placeholder="hh:mm"><br>
-                                            <span class="indent">End </span><input type="time" id="avai_hour_end_time_input" placeholder="hh:mm"><br>
-                                            <span class="bold_font-weight">Repeat:</span> <input type="checkbox" id="repeat_checkbox"><span class="indent light_font-weight">Every week</span><br>
-                                            <span class="bold_font-weight">Location:</span><br>
-                                            <input type="text" id="avai_hour_location_input"><br>
+                                        <!-- <h5>Available Hour</h5> -->
+                                        <select id="add_hour_type_select">
+                                            <option id="add_ah_option">Available Hour</option>
+                                            <option id="add_oh_option">Office Hour</option>
+                                        </select>
+                                        <div id="set_ah_div">
+                                            <!-- <div> -->
+                                                <span class="bold_font-weight">Time:</span><br>
+                                                <span class="indent">Start </span><input type="time" id="avai_hour_start_time_input" placeholder="hh:mm"><br>
+                                                <span class="indent">End </span><input type="time" id="avai_hour_end_time_input" placeholder="hh:mm"><br>
+                                                <span class="bold_font-weight">Repeat:</span> <input type="checkbox" id="repeat_checkbox"><span class="indent light_font-weight">Every week</span><br>
+                                                <span class="bold_font-weight">Location:</span><br>
+                                                <input type="text" id="avai_hour_location_input"><br>
+                                            <!-- </div> -->
+                                            <span id="set_ah_button">Set</span>
+                                        </div>
+                                        <div id="set_oh_div">
+                                            <!-- <div> -->
+                                                <span class="bold_font-weight">Every <span id="oh_weekday_span"></span></span><br>
+                                                <span class="bold_font-weight">Time:</span><br>
+                                                <span class="indent">Start </span><input type="time" id="office_hour_start_time_input" placeholder="hh:mm"><br>
+                                                <span class="indent">End </span><input type="time" id="office_hour_end_time_input" placeholder="hh:mm"><br>
+                                                <span class="bold_font-weight">Location:</span><br>
+                                                <input type="text" id="office_hour_location_input"><br>
+                                            <!-- </div> -->
+                                            <span id="set_oh_button">Set</span>
                                         </div>
                                         
-                                        <span id="set_avai_hour_button">Set</span>
+                                        
 
                                     </div>
                                     <a href="index.php" class="back_to_home_button"><span class="lnr lnr-arrow-left"></span>Back</a>

@@ -5,13 +5,10 @@
 
 	$logged_user_id = $_SESSION['logged_user_id'];
 
-	$user_id_2 = $_GET['user_id_2'];
-	$scheduled_time = $_GET['time'];
+	$weekday = $_GET['weekday'];
+	$start_time = $_GET['start_time'];
+	$end_time = $_GET['end_time'];
 	$location = $_GET['location'];
-	$month = $_GET['month'];
-	$date = $_GET['date'];
-	$year = $_GET['year'];
-	$notes = $_GET['notes'];
 
 	
 
@@ -24,8 +21,8 @@
 	}
 
 	//check if username exists
-	$query = "INSERT INTO schedules (user_id_1, user_id_2, `time`,location,status,notes)
-				VALUES ($logged_user_id, '$user_id_2', '$year-$month-$date $scheduled_time', '$location' ,'pending','$notes')";
+	$query = "INSERT INTO faculty_office_hours (user_id, start_time, end_time, weekdays, office_hour_location)
+				VALUES ($logged_user_id, '$start_time', '$end_time', '$weekday', '$location')";
 	echo $query;
 		
 	if ($mysqli->query($query) === TRUE) {

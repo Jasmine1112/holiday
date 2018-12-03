@@ -92,19 +92,37 @@ function confirm_schedule(schedule_detail_json) {
 	$("#successful_schedule_confirmation_modal #confirm_start_time_2").text(start_time);
 	$("#successful_schedule_confirmation_modal #confirm_username_2").text(name);
 
+	$("#pending_schedule_confirmation_modal #confirm_date_3").text(month+" "+date+", "+year);
+	$("#pending_schedule_confirmation_modal #confirm_weekday_3").text(weekdays);
+	$("#pending_schedule_confirmation_modal #confirm_start_time_3").text(start_time);
+	$("#pending_schedule_confirmation_modal #confirm_username_3").text(name);
+
 	if (office_hour_location!=undefined) {
 		$("#schedule_appointment_confirmation_modal #confirm_location_1").text(office_hour_location);
 		$("#successful_schedule_confirmation_modal #confirm_location_2").text(office_hour_location);
+		$("#pending_schedule_confirmation_modal #confirm_location_3").text(office_hour_location);
+
+		schedule_detail_json["scheduled_month"] = month_text_int(month);
+		schedule_detail_json["scheduled_date"] = date;
+		schedule_detail_json["scheduled_year"] = year;
 
 	}else{
 		var available_hour_location = schedule_detail_json.available_hour_location;
 		$("#schedule_appointment_confirmation_modal #confirm_location_1").text(available_hour_location);
 		$("#successful_schedule_confirmation_modal #confirm_location_2").text(available_hour_location);
+		$("#pending_schedule_confirmation_modal #confirm_location_3").text(available_hour_location);
+
+		//if this is available hour, the date shouldn't be next day of week, should be the date retrived from database
+		$("#schedule_appointment_confirmation_modal #confirm_date_1").text(schedule_detail_json.date);
+		$("#successful_schedule_confirmation_modal #confirm_date_2").text(schedule_detail_json.date);
+		$("#pending_schedule_confirmation_modal #confirm_date_3").text(schedule_detail_json.date);
+
+		schedule_detail_json["scheduled_month"] = schedule_detail_json.date.split("-")[1];
+		schedule_detail_json["scheduled_date"] = schedule_detail_json.date.split("-")[2];
+		schedule_detail_json["scheduled_year"] = schedule_detail_json.date.split("-")[0];
 	}
 
-	schedule_detail_json["scheduled_month"] = month_text_int(month);
-	schedule_detail_json["scheduled_date"] = date;
-	schedule_detail_json["scheduled_year"] = year;
+	
 
 	if (office_hour_location!=undefined) {
 		schedule_detail_json['hours_type'] = 'office_hour';
@@ -121,51 +139,6 @@ function confirm_schedule(schedule_detail_json) {
 	$("#schedule_appointment_confirmation_modal").css("display","block");
 }
 
-// function confirm_register(event) {
-// 	var schedule_detail_json = event.data.param;
-// 	var user_id = schedule_detail_json.user_id;
-// 	var scheduled_time = schedule_detail_json.start_time;
-// 	var location = schedule_detail_json.office_hour_location;
-// 	var month = schedule_detail_json.scheduled_month+1;
-// 	var date = schedule_detail_json.scheduled_date;
-// 	var year = schedule_detail_json.scheduled_year;
-// 	var notes = $("#schedule_appointment_confirmation_modal #notes_input").val();
-
-// 	var hours_type = event.data.hours_type;
-// 	if (hours_type=="office_hour") {
-// 		console.log("office_hour");
-// 	}else if (hours_type=="available_hour") {
-// 		console.log("available_hour");
-// 	}
-
-// 	// console.log(scheduled_time, month, date,year);
-
-// 	// var request = $.ajax({
-// 	// 	type: 'GET',
-// 	// 	url: "/ajax_php/add_new_schedule.php",
-// 	// 	data: {
-// 	// 		user_id_2: user_id,
-// 	// 		time: scheduled_time,
-// 	// 		location: location,
-// 	// 		month:month,
-// 	// 		date:date,
-// 	// 		year:year,
-// 	// 		notes
-// 	// 	}
-// 	// });
-
-// 	// request.fail(function(xhr, status, error) {
-// 	// 	console.log("failed");
-// 	// 	console.log(xhr);
-// 	// 	console.log(status);
-// 	// 	console.log(error);
-// 	// });
-
-// 	// request.done(function(data) {
-// 	// 	$("#schedule_appointment_confirmation_modal").css("display","none");
-// 	// 	$("#successful_schedule_confirmation_modal").css("display","block");
-// 	// });
-// }
 
 $(document).ready( function () {
 	
@@ -305,7 +278,7 @@ $(document).ready( function () {
 								// 	tr_str = tr_str+"<th>"+weekday_input+" "+ result.start_time+"-"+result.end_time+"</th>";
 								// }
 								tr_str = tr_str+"<th>"+result.available_hour_location+"</th>";
-								tr_str = tr_str+"<th><span class='register_button pointer' id='register_button_"+result.user_id+"' onclick='confirm_schedule("+result_json_str+")'>Register</span></th>";
+								tr_str = tr_str+"<th><span class='register_button pointer' id='register_button_"+result.user_id+"' onclick='confirm_schedule("+result_json_str+")'>Request</span></th>";
 
 								$("#search_available_hour_result_table").append(tr_str);
 							});
@@ -335,7 +308,14 @@ $(document).ready( function () {
 		var user_id = schedule_detail_json.user_id;
 		var scheduled_time = schedule_detail_json.start_time;
 		var location = schedule_detail_json.office_hour_location;
-		var month = schedule_detail_json.scheduled_month+1;
+		if (location==undefined) {
+			var location = schedule_detail_json.available_hour_location;
+			var schedule_type = "available_hour";
+		}else{
+			var schedule_type = "office_hour";
+		}
+
+		var month = schedule_detail_json.scheduled_month;
 		var date = schedule_detail_json.scheduled_date;
 		var year = schedule_detail_json.scheduled_year;
 		var hours_type = schedule_detail_json.hours_type;
@@ -347,10 +327,12 @@ $(document).ready( function () {
 		if (meeting_subject=="") {
 			alert("You have to fill in your meeting subject!");
 		}else{
+			console.log(year,month,date,scheduled_time);
 			var request = $.ajax({
 				type: 'GET',
 				url: "/ajax_php/add_new_schedule.php",
 				data: {
+					schedule_type: schedule_type,
 					user_id_2: user_id,
 					time: scheduled_time,
 					location: location,
@@ -371,7 +353,14 @@ $(document).ready( function () {
 
 			request.done(function(data) {
 				$("#schedule_appointment_confirmation_modal").css("display","none");
-				$("#successful_schedule_confirmation_modal").css("display","block");
+				$("#schedule_appointment_confirmation_modal #meeting_subject_input").val("");
+				$("#schedule_appointment_confirmation_modal #notes_input").val("");
+				if (schedule_type=="office_hour") {
+					$("#successful_schedule_confirmation_modal").css("display","block");
+				}else{
+					$("#pending_schedule_confirmation_modal").css("display","block")
+				}
+				
 			});
 		}
 		
@@ -380,10 +369,20 @@ $(document).ready( function () {
 	$("#schedule_appointment_confirmation_modal .close_modal_button").on("click",function(event) {
 		$("#proposed_location_input").remove();
 		$("#schedule_appointment_confirmation_modal").css("display","none");
+		$("#schedule_appointment_confirmation_modal #meeting_subject_input").val("");
+		$("#schedule_appointment_confirmation_modal #notes_input").val("");
 	});
 
 	$("#successful_schedule_confirmation_modal .close_modal_button").on("click",function(event) {
 		$("#successful_schedule_confirmation_modal").css("display","none");
+		$("#schedule_appointment_confirmation_modal #meeting_subject_input").val("");
+		$("#schedule_appointment_confirmation_modal #notes_input").val("");
+	});
+
+	$("#pending_schedule_confirmation_modal .close_modal_button").on("click",function(event) {
+		$("#pending_schedule_confirmation_modal").css("display","none");
+		$("#schedule_appointment_confirmation_modal #meeting_subject_input").val("");
+		$("#schedule_appointment_confirmation_modal #notes_input").val("");
 	});
 
 

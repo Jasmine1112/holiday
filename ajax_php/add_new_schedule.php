@@ -5,6 +5,7 @@
 
 	$logged_user_id = $_SESSION['logged_user_id'];
 
+	$schedule_type = $_GET['schedule_type'];
 	$user_id_2 = $_GET['user_id_2'];
 	$scheduled_time = $_GET['time'];
 	$location = $_GET['location'];
@@ -24,9 +25,14 @@
 		die( "Couldn't connect to database");
 	}
 
-	//check if username exists
-	$query = "INSERT INTO schedules (user_id_1, user_id_2, `time`,location,status,meeting_subject,notes)
-				VALUES ($logged_user_id, '$user_id_2', '$year-$month-$date $scheduled_time', '$location' ,'upcoming', '$meeting_subject','$notes')";
+	if ($schedule_type == "available_hour") {
+		$query = "INSERT INTO schedules (user_id_1, user_id_2, `time`,location,status,meeting_subject,notes,seen_by_user1,seen_by_user2)
+				VALUES ($logged_user_id, '$user_id_2', '$year-$month-$date $scheduled_time', '$location' ,'pending', '$meeting_subject','$notes','false','false')";
+	}else{
+		$query = "INSERT INTO schedules (user_id_1, user_id_2, `time`,location,status,meeting_subject,notes,seen_by_user1,seen_by_user2)
+				VALUES ($logged_user_id, '$user_id_2', '$year-$month-$date $scheduled_time', '$location' ,'upcoming', '$meeting_subject','$notes','false','false')";
+	}
+	
 	echo $query;
 		
 	if ($mysqli->query($query) === TRUE) {

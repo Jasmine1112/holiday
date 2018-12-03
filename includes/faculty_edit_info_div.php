@@ -1,4 +1,4 @@
-<div id="student_edit_info_div" class="student_edit_info_div full_screen_height col-lg-8 hidden">
+<div id="faculty_edit_info_div" class="student_edit_info_div full_screen_height col-lg-8 hidden">
     <!-- <div class="row half_screen_height"> -->
     	<h3>Edit Information</h3>
         <div class="row">
@@ -18,10 +18,10 @@
             <div class="col-lg-6">
             	<span class="green_span">SCHOOL</span><br>
                 <input type="text" id="school_input"><br>
-                <span class="green_span">COLLEGE</span><br>
-                <input type="text" id="college_input"><br>
-                <span class="green_span">MAJOR</span><br>
-                <input type="text" id="major_input"><br>
+                <span class="green_span">DEPARTMENT</span><br>
+                <input type="text" id="department_input"><br>
+                <span class="green_span">FACULTY ID</span><br>
+                <input type="text" id="faculty_id_input"><br>
                 
             </div>
         </div>

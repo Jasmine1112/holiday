@@ -1,7 +1,9 @@
 <?php
 	require_once '../includes/config.php';
 
-	$username_input = $_POST['username_input'];
+	// $username_input = $_POST['username_input'];
+	$first_name_input = $_POST['first_name_input'];
+	$last_name_input = $_POST['last_name_input'];
 	$email_input = $_POST['email_input'];
 	$password_input = $_POST['password_input'];
 	$type_input = $_POST['type_input'];
@@ -40,7 +42,7 @@
 		// print("hi");
 		//hash the password
 		$hash_password = password_hash($password_input, PASSWORD_DEFAULT);
-		$register_query = "INSERT INTO users(username,hash_password,user_type,email) VALUES ('$username_input','$hash_password','$type_input','$email_input');";
+		$register_query = "INSERT INTO users(username,hash_password,user_type,email,first_name,last_name) VALUES ('$first_name_input $last_name_input','$hash_password','$type_input','$email_input','$first_name_input','$last_name_input');";
 			
 		$register_stmt = $mysqli->stmt_init();
 

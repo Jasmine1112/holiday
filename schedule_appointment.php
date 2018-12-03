@@ -128,6 +128,22 @@
                             <a href="edit_appointment.php" class="dark_grey_button"><span class="close_modal_button">Change</span></a>
                         </div>
 
+                        <div class="confirmation_modal" id="pending_schedule_confirmation_modal">
+                            <span class="close_modal_button pointer back_to_home_button"><span class="lnr lnr-arrow-left"></span>Schedule Another Appointment</span>
+                            <h2>You have successfully sent your appointment request!</h2>
+                            <div class="green_border_div">
+                                <p>
+                                    <span id="confirm_date_3"></span>, 
+                                    <span id="confirm_weekday_3"></span>, 
+                                    <span id="confirm_start_time_3"></span>
+                                </p>
+                                <p><span id="confirm_username_3"></span> @<span id="confirm_location_3"></span></p>
+                            </div>
+                            
+                            <!-- <a href="calendar.php" class="red_button"><span>View in Calendar</span><a> -->
+                            <a href="edit_appointment.php" class="red_button"><span class="close_modal_button">View Request Status</span></a>
+                        </div>
+
 
 
 

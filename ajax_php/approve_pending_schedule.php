@@ -17,8 +17,8 @@
 
 	//check if username exists
 	$query = "UPDATE schedules
-				SET status = 'past', seen_by_user1 = 'false', seen_by_user2 = 'false'
-				WHERE schedule_id = $schedule_id AND (user_id_1 = $logged_user_id OR user_id_2 = $logged_user_id);";
+				SET status = 'upcoming', seen_by_user1 = 'false', seen_by_user2 = 'false'
+				WHERE schedule_id = $schedule_id AND user_id_2 = $logged_user_id;";
 	
 
 	$stmt = $mysqli->stmt_init();

@@ -3,7 +3,7 @@
 	session_start();
 	require_once '../includes/config.php';
 
-	$schedule_id = $_GET['schedule_id'];
+	$office_hour_id = $_GET['office_hour_id'];
 
 	$logged_user_id = $_SESSION['logged_user_id'];
 
@@ -16,9 +16,8 @@
 	}
 
 	//check if username exists
-	$query = "UPDATE schedules
-				SET status = 'past', seen_by_user1 = 'false', seen_by_user2 = 'false'
-				WHERE schedule_id = $schedule_id AND (user_id_1 = $logged_user_id OR user_id_2 = $logged_user_id);";
+	$query = "DELETE FROM faculty_office_hours
+				WHERE user_id = '$logged_user_id' AND office_hour_id = '$office_hour_id';";
 	
 
 	$stmt = $mysqli->stmt_init();
@@ -32,7 +31,6 @@
 	} else {
 		print("<p>Error with register submission1</p>");
 	}
-
 	mysqli_stmt_close($email_stmt);
 	
 	mysqli_close($mysqli);

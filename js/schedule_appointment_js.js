@@ -67,7 +67,7 @@ function getNextDayOfWeek(dayOfWeek) {
 }
 
 function confirm_schedule(schedule_detail_json) {
-	// console.log(schedule_detail_json);
+	console.log(schedule_detail_json);
 	var name = schedule_detail_json.username;
 	var weekdays = schedule_detail_json.weekdays;
 	var next_day_of_week = getNextDayOfWeek(weekday_text_int(weekdays));
@@ -112,14 +112,24 @@ function confirm_schedule(schedule_detail_json) {
 		$("#successful_schedule_confirmation_modal #confirm_location_2").text(available_hour_location);
 		$("#pending_schedule_confirmation_modal #confirm_location_3").text(available_hour_location);
 
-		//if this is available hour, the date shouldn't be next day of week, should be the date retrived from database
-		$("#schedule_appointment_confirmation_modal #confirm_date_1").text(schedule_detail_json.date);
-		$("#successful_schedule_confirmation_modal #confirm_date_2").text(schedule_detail_json.date);
-		$("#pending_schedule_confirmation_modal #confirm_date_3").text(schedule_detail_json.date);
+		//if this is available hour
+		//if repeat is false, the date shouldn't be next day of week, should be the date retrieved from database
+		if (schedule_detail_json.repeat == 'false') {
+			$("#schedule_appointment_confirmation_modal #confirm_date_1").text(schedule_detail_json.date);
+			$("#successful_schedule_confirmation_modal #confirm_date_2").text(schedule_detail_json.date);
+			$("#pending_schedule_confirmation_modal #confirm_date_3").text(schedule_detail_json.date);
 
-		schedule_detail_json["scheduled_month"] = schedule_detail_json.date.split("-")[1];
-		schedule_detail_json["scheduled_date"] = schedule_detail_json.date.split("-")[2];
-		schedule_detail_json["scheduled_year"] = schedule_detail_json.date.split("-")[0];
+			schedule_detail_json["scheduled_month"] = schedule_detail_json.date.split("-")[1];
+			schedule_detail_json["scheduled_date"] = schedule_detail_json.date.split("-")[2];
+			schedule_detail_json["scheduled_year"] = schedule_detail_json.date.split("-")[0];
+		}else{
+			schedule_detail_json["scheduled_month"] = month_text_int(month);
+			schedule_detail_json["scheduled_date"] = date;
+			schedule_detail_json["scheduled_year"] = year;
+		}
+		
+
+		
 	}
 
 	

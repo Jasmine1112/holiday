@@ -27,6 +27,7 @@
 				AND UPPER(U.username) LIKE UPPER('%$name_input%')
 				AND UPPER(U.college_department) LIKE UPPER('%$department_input%')
 				AND UPPER(AH.weekdays) LIKE UPPER('%$weekday_input%')
+				AND ((AH.repeat = 'true') OR (AH.repeat = 'false' AND AH.date >= now()))
 			ORDER BY U.username;";
 
 

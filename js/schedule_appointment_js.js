@@ -102,7 +102,7 @@ function confirm_schedule(schedule_detail_json) {
 		$("#successful_schedule_confirmation_modal #confirm_location_2").text(office_hour_location);
 		$("#pending_schedule_confirmation_modal #confirm_location_3").text(office_hour_location);
 
-		schedule_detail_json["scheduled_month"] = month_text_int(month);
+		schedule_detail_json["scheduled_month"] = month_text_int(month)+1;
 		schedule_detail_json["scheduled_date"] = date;
 		schedule_detail_json["scheduled_year"] = year;
 

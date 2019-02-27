@@ -123,16 +123,16 @@ function confirm_schedule(schedule_detail_json) {
 			schedule_detail_json["scheduled_date"] = schedule_detail_json.date.split("-")[2];
 			schedule_detail_json["scheduled_year"] = schedule_detail_json.date.split("-")[0];
 		}else{
-			schedule_detail_json["scheduled_month"] = month_text_int(month);
+			schedule_detail_json["scheduled_month"] = month_text_int(month)+1;
 			schedule_detail_json["scheduled_date"] = date;
 			schedule_detail_json["scheduled_year"] = year;
 		}
-		
 
-		
+
+
 	}
 
-	
+
 
 	if (office_hour_location!=undefined) {
 		schedule_detail_json['hours_type'] = 'office_hour';
@@ -141,17 +141,17 @@ function confirm_schedule(schedule_detail_json) {
 		schedule_detail_json['hours_type'] = 'available_hour';
 		// $("#schedule_appointment_confirmation_modal #confirm_schedule_appointment_button").click({param: schedule_detail_json, hours_type:'available_hour'}, confirm_register);
 	}
-	
+
 	$("#hidden_schedule_info").val(JSON.stringify(schedule_detail_json));
 
-	
+
 
 	$("#schedule_appointment_confirmation_modal").css("display","block");
 }
 
 
 $(document).ready( function () {
-	
+
 	//search office hour schedule
 	$("#search_schedule_button").on("click",function(event) {
 		$(".hours_result_div").css("display","none");
@@ -207,7 +207,7 @@ $(document).ready( function () {
 
 						}else{
 							// console.log(data);
-							
+
 							$("#search_office_hour_result_table").css("display","inline-table");
 							$("#search_office_hour_result_table tr.result_rows").remove();
 							$("#search_office_hour_result_div").css("display","block");
@@ -234,7 +234,7 @@ $(document).ready( function () {
 								$("#search_office_hour_result_table").append(tr_str);
 							});
 						}
-						
+
 					});
 				}
 
@@ -293,11 +293,11 @@ $(document).ready( function () {
 								$("#search_available_hour_result_table").append(tr_str);
 							});
 						}
-						
+
 					});
 				}
-				
-				
+
+
 			}else{
 				//if some of the numbers cannot be parsed as int
 				alert("Please follow the date format: yyyy-mm-dd");
@@ -370,10 +370,10 @@ $(document).ready( function () {
 				}else{
 					$("#pending_schedule_confirmation_modal").css("display","block")
 				}
-				
+
 			});
 		}
-		
+
 	});
 
 	$("#schedule_appointment_confirmation_modal .close_modal_button").on("click",function(event) {

@@ -26,7 +26,8 @@
 			FROM schedules S, users U
 			WHERE ((S.user_id_1 = $logged_user_id AND S.user_id_2 = U.user_id)
 					OR (S.user_id_2 = $logged_user_id AND S.user_id_1 = U.user_id))
-					AND DATE(S.time)='$input_year-$input_month-$input_date';";
+					AND DATE(S.time)='$input_year-$input_month-$input_date'
+					AND S.status = 'upcoming';";
 
 	$result = $mysqli->query($query);
 	if (!$result) {

@@ -14,7 +14,9 @@
 	}
 
 	//check if username exists
-	$query = "SELECT * FROM schedules WHERE user_id_1 = $logged_user_id OR user_id_2 = $logged_user_id;";
+	$query = "SELECT * FROM schedules
+						WHERE (user_id_1 = $logged_user_id OR user_id_2 = $logged_user_id)
+						AND status='upcoming';";
 
 	$result = $mysqli->query($query);
 	if (!$result) {
